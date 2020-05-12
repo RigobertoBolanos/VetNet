@@ -12,12 +12,17 @@ class MedicalRecord extends Model
         'diagnosis',
         'treatments',
         'date',
+<<<<<<< HEAD
         'consultationReason',
+=======
+        'consultationreason',
+>>>>>>> f86ceb4e898a9b75e9d60d671e1bc35cbf8b1cd4
         'medicalHistory'
     ];
 
     public function medicalHistory()
     {
+<<<<<<< HEAD
         return $this->belongsTo(MedicalHistory::class);    
     }
 
@@ -27,4 +32,8 @@ class MedicalRecord extends Model
     }
 
 
+=======
+        return $this->belongsTo(MedicalRecord::class);
+    }
+>>>>>>> f86ceb4e898a9b75e9d60d671e1bc35cbf8b1cd4
 }

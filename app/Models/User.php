@@ -45,6 +45,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+<<<<<<< HEAD
     
     //Veterinary
     public function medicalRecords()
@@ -58,4 +59,11 @@ class User extends Authenticatable
         return $this->hasMany(Pet::class);
     }
 
+=======
+
+    public function pets()
+    {
+        $this->hasMany(Pet::class);
+    }
+>>>>>>> f86ceb4e898a9b75e9d60d671e1bc35cbf8b1cd4
 }
