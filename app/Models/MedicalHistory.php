@@ -8,7 +8,7 @@ class MedicalHistory extends Model
 {
     private $fillable = [
         'pet',
-        'medicalrecords'
+        'medicalRecords'
     ];
 
     public function pet()

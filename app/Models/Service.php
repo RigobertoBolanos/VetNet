@@ -8,8 +8,13 @@ class Service extends Model
 {
     protected $fillable= [
         'name',
-        'price'
+        'price',
+        'appointments'
     ];
     
+    public function appointments()
+    {
+        return $this->belongsToMany(Appointment::class);
+    }
     
 }

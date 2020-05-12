@@ -26,6 +26,6 @@ class Appointment extends Model
     // Muchos a muchos -- Pendiente
     public function service()
     {
-        return $this->hasMany(Pet::class);    
+        return $this->belongsToMany(Service::class);    
     }
 }
