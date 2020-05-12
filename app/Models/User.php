@@ -18,13 +18,14 @@ class User extends Authenticatable
     protected $fillable = [
         'email', 
         'password',
-        'fullname',
+        'fullName',
         'address',
-        'phonenumber',
-        'professionalcard',
-        'contratnumber',
-        'academicdegrees',
+        'phoneNumber',
+        'professionalCard',
+        'contratNumber',
+        'academicDegrees',
         'pets',
+        'medicalRecords'
     ];
 
     /**
@@ -44,4 +45,17 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    
+    //Veterinary
+    public function medicalRecords()
+    {
+        return $this->hasMany(MedicalRecord::class);
+    }
+
+    //Pet Owner
+    public function pets()
+    {
+        return $this->hasMany(Pet::class);
+    }
+
 }

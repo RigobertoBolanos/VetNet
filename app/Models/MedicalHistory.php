@@ -6,7 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class MedicalHistory extends Model
 {
-    private $fillable = [ 'pet', 'medicalrecords'];
+    private $fillable = [
+        'pet',
+        'medicalrecords'
+    ];
+
+    public function pet()
+    {
+        return $this->belongsTo(Pet::class);    
+    }
 
     public function medicalrecords()
     {

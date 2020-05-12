@@ -12,6 +12,19 @@ class MedicalRecord extends Model
         'diagnosis',
         'treatments',
         'date',
-        'consultationreason'
+        'consultationReason',
+        'medicalHistory'
     ];
+
+    public function medicalHistory()
+    {
+        return $this->belongsTo(MedicalHistory::class);    
+    }
+
+    public function veterinary()
+    {
+        return $this->belongsTo(User::class);    
+    }
+
+
 }
