@@ -2,26 +2,88 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Eloquent as Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * Class Pet
+ * @package App\Models
+ * @version May 13, 2020, 6:01 am UTC
+ *
+ * @property \Illuminate\Database\Eloquent\Collection $appointments
+ * @property \App\Models\User $owner
+ * @property \App\Models\MedicalHistory $medicalHistory
+ * @property string $name
+ * @property string $breed
+ * @property integer $age
+ * @property integer $owner
+ * @property integer $medicalhistory
+ */
 class Pet extends Model
 {
-    protected $fillable= [
+    use SoftDeletes;
+
+    public $table = 'pets';
+    
+
+    protected $dates = ['deleted_at'];
+
+
+
+    public $fillable = [
         'name',
-        'age',
         'breed',
-        'specie',
+        'age',
         'owner',
-        'medicalHistory'
+        'medicalhistory'
     ];
 
-    public function medicalHistory()
-    {
-        return $this->hasOne(MedicalHistory::class);    
-    } 
+    /**
+     * The attributes that should be casted to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'id' => 'integer',
+        'name' => 'string',
+        'breed' => 'string',
+        'age' => 'integer',
+        'owner' => 'integer',
+        'medicalhistory' => 'integer'
+    ];
 
+    /**
+     * Validation rules
+     *
+     * @var array
+     */
+    public static $rules = [
+        'name' => 'required',
+        'breed' => 'required',
+        'age' => 'required'
+    ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     **/
+    public function appointments()
+    {
+        return $this->hasMany(\App\Models\Appointment::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     **/
     public function owner()
     {
-        return $this->belongsTo(User::class);    
+        return $this->belongsTo(\App\Models\User::class, 'owner', 'id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     **/
+    public function medicalHistory()
+    {
+        return $this->hasOne(\App\Models\MedicalHistory::class);
     }
 }

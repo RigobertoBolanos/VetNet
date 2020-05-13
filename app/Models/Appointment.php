@@ -2,30 +2,80 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Eloquent as Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * Class Appointment
+ * @package App\Models
+ * @version May 13, 2020, 6:04 am UTC
+ *
+ * @property \App\Models\Pet $pet
+ * @property \App\Models\Users $veterinary
+ * @property \Illuminate\Database\Eloquent\Collection $services
+ * @property integer $pet
+ * @property integer $veterinary
+ * @property integer $services
+ */
 class Appointment extends Model
 {
-    private $fillable = [
+    use SoftDeletes;
+
+    public $table = 'appointments';
+    
+
+    protected $dates = ['deleted_at'];
+
+
+
+    public $fillable = [
         'pet',
         'veterinary',
-        'services',
-        'date'
+        'services'
     ];
-    
+
+    /**
+     * The attributes that should be casted to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'id' => 'integer',
+        'pet' => 'integer',
+        'veterinary' => 'integer',
+        'services' => 'integer'
+    ];
+
+    /**
+     * Validation rules
+     *
+     * @var array
+     */
+    public static $rules = [
+        
+    ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     **/
     public function pet()
     {
-        return $this->belongsTo(Pet::class);    
+        return $this->belongsTo(\App\Models\Pet::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     **/
     public function veterinary()
     {
-        return $this->belongsTo(veterinary::class);    
+        return $this->belongsTo(\App\Models\Users::class, 'veterinary', 'id');
     }
 
-    // Muchos a muchos -- Pendiente
-    public function service()
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     **/
+    public function services()
     {
-        return $this->belongsToMany(Service::class);    
+        return $this->belongsToMany(\App\Models\Service::class);
     }
 }

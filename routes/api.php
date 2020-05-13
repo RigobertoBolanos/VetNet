@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +16,16 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+Route::resource('users', 'UserAPIController');
+
+Route::resource('services', 'ServiceAPIController');
+
+Route::resource('pets', 'PetAPIController');
+
+Route::resource('medical_records', 'MedicalRecordAPIController');
+
+Route::resource('medical_histories', 'MedicalHistoryAPIController');
+
+Route::resource('appointments', 'AppointmentAPIController');

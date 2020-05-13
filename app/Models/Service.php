@@ -2,19 +2,60 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Eloquent as Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * Class Service
+ * @package App\Models
+ * @version May 13, 2020, 6:01 am UTC
+ *
+ * @property \Illuminate\Database\Eloquent\Collection $appointments
+ * @property number $price
+ * @property string $name
+ */
 class Service extends Model
 {
-    protected $fillable= [
-        'name',
-        'price',
-        'appointments'
-    ];
+    use SoftDeletes;
+
+    public $table = 'services';
     
+
+    protected $dates = ['deleted_at'];
+
+
+
+    public $fillable = [
+        'price',
+        'name'
+    ];
+
+    /**
+     * The attributes that should be casted to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'id' => 'integer',
+        'price' => 'double',
+        'name' => 'string'
+    ];
+
+    /**
+     * Validation rules
+     *
+     * @var array
+     */
+    public static $rules = [
+        'price' => 'required',
+        'name' => 'required'
+    ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     **/
     public function appointments()
     {
-        return $this->belongsToMany(Appointment::class);
+        return $this->belongsToMany(\App\Models\Appointment::class);
     }
-    
 }
