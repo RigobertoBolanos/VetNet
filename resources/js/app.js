@@ -5,13 +5,10 @@
  */
 
 require('./bootstrap');
-
-window.Vue = require('vue'); 
-import Vuetify from 'vuetify'; 
-Vue.use(Vuetify);
-
-
 window.Vue = require('vue');
+
+import vuetify from '../../src/plugins/vuetify'; 
+import App from '../../src/App.vue'; 
 
 /**
  * The following block of code may be used to automatically register your
@@ -32,5 +29,6 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  */
 
 const app = new Vue({
-    el: '#app'
-});
+    vuetify,
+    render: h => h(App),
+  }).$mount('#app')
