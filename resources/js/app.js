@@ -4,11 +4,12 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
-window.Vue = require('vue');
+//require('./bootstrap');
+//window.Vue = require('vue');
 
-import vuetify from '../../src/plugins/vuetify'; 
-import App from '../../src/App.vue'; 
+import Vue from  'vue';
+import vuetify from './plugins/vuetify';
+import router from './routes/router'
 
 /**
  * The following block of code may be used to automatically register your
@@ -18,10 +19,10 @@ import App from '../../src/App.vue';
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
 
-// const files = require.context('./', true, /\.vue$/i);
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
+ const files = require.context('./', true, /\.vue$/i);
+ files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+//Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -30,5 +31,6 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 
 const app = new Vue({
     vuetify,
-    render: h => h(App),
-  }).$mount('#app')
+    router,
+    el: '#app'
+})
