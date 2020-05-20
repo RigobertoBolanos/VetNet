@@ -17,6 +17,7 @@ use Response;
 
 class AppointmentAPIController extends AppBaseController
 {
+    
     /** @var  AppointmentRepository */
     private $appointmentRepository;
 
@@ -54,7 +55,7 @@ class AppointmentAPIController extends AppBaseController
     public function store(CreateAppointmentAPIRequest $request)
     {
         $input = $request->all();
-
+        
         $appointment = $this->appointmentRepository->create($input);
 
         return $this->sendResponse($appointment->toArray(), 'Appointment saved successfully');

@@ -30,8 +30,9 @@ class Appointment extends Model
 
     public $fillable = [
         'pet',
-        'veterinary',
-        'services'
+        'assigned_to',
+        'services',
+        'date'
     ];
 
     /**
@@ -42,7 +43,7 @@ class Appointment extends Model
     protected $casts = [
         'id' => 'integer',
         'pet' => 'integer',
-        'veterinary' => 'integer',
+        'assigned_to' => 'integer',
         'services' => 'integer'
     ];
 
@@ -66,9 +67,9 @@ class Appointment extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      **/
-    public function veterinary()
+    public function assignedTo()
     {
-        return $this->belongsTo(\App\Models\Users::class, 'veterinary', 'id');
+        return $this->belongsTo(\App\Models\Users::class, 'assignedTo', 'id');
     }
 
     /**

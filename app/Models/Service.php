@@ -27,7 +27,8 @@ class Service extends Model
 
     public $fillable = [
         'price',
-        'name'
+        'name',
+        'description'
     ];
 
     /**
@@ -38,7 +39,8 @@ class Service extends Model
     protected $casts = [
         'id' => 'integer',
         'price' => 'double',
-        'name' => 'string'
+        'name' => 'string',
+        'description' => 'string'
     ];
 
     /**
@@ -48,7 +50,8 @@ class Service extends Model
      */
     public static $rules = [
         'price' => 'required',
-        'name' => 'required'
+        'name' => 'required',
+        'description' => 'required'
     ];
 
     /**
