@@ -59,7 +59,7 @@
 
 <script>
 import axios from 'axios'
-import newPet from './NewPet'
+import NewPet from './NewPet'
 
 export default {
   name: "pets",
@@ -142,14 +142,14 @@ export default {
       },
       async refresh()
       {
-        let query = await axios.get("api/pets")
+        let query = await axios.get("pets")
 
         query.data.data.forEach( async data =>
         {
-          let owner =  await axios.get("api/users/" + data.owner)
+          let owner =  await axios.get("users/" + data.owner)
          
           this.pets.push({
-            name: data.date,
+            name: data.name,
             breed: data.breed,
             age: data.age,
             owner: owner.data.data
