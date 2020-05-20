@@ -101,7 +101,9 @@
 </template>
 
 <script>
-import axios from 'axios'
+//import axios from 'axios'
+import axios from '../../plugins/axios'
+
 import qs from 'qs'
 export default {
   name: "newappointmentform",
@@ -171,6 +173,7 @@ export default {
         console.log(err)
       });
       */
+     /*
       const params = new URLSearchParams()
       params.append('date', this.date + " " + this.hour)
       params.append('pet', this.pet.id)
@@ -193,6 +196,18 @@ export default {
       }  
       axios.post('api/appointments', qs.stringify(requestBody), config) 
       .then((result) => console.log(result)).catch((err) => console.log(err))
+      */        
+      axios({
+        method: 'post',
+        url: 'appointments',
+        data: qs.stringify(
+        {         
+          date: this.date + " " + this.hour,         
+          pet: this.pet.id,         
+          assigned_to: this.assigned_to.id,         
+          service: this.service.id      
+        }),
+      }).then((response) => console.log(response)).catch((error) =>console.log(error))
       /*
       this.newForumStatus  = 
                   {

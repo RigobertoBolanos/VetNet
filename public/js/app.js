@@ -2157,10 +2157,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("api/appointments");
+                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("appointments");
 
               case 2:
                 query = _context2.sent;
+                console.log(query);
                 query.data.data.forEach( /*#__PURE__*/function () {
                   var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(data) {
                     var pet, assigned_to, service;
@@ -2169,17 +2170,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                         switch (_context.prev = _context.next) {
                           case 0:
                             _context.next = 2;
-                            return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("api/pets/" + data.pet);
+                            return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("pets/" + data.pet);
 
                           case 2:
                             pet = _context.sent;
                             _context.next = 5;
-                            return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("api/users/" + data.assigned_to);
+                            return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("users/" + data.assigned_to);
 
                           case 5:
                             assigned_to = _context.sent;
                             _context.next = 8;
-                            return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("api/services/" + data.service);
+                            return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("services/" + data.service);
 
                           case 8:
                             service = _context.sent;
@@ -2204,7 +2205,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   };
                 }());
 
-              case 4:
+              case 5:
               case "end":
                 return _context2.stop();
             }
@@ -2235,8 +2236,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _plugins_axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../plugins/axios */ "./resources/js/plugins/axios.js");
 /* harmony import */ var qs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! qs */ "./node_modules/qs/lib/index.js");
 /* harmony import */ var qs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(qs__WEBPACK_IMPORTED_MODULE_1__);
 //
@@ -2341,6 +2341,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//import axios from 'axios'
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2385,26 +2386,44 @@ __webpack_require__.r(__webpack_exports__);
         console.log(err)
       });
       */
-      var params = new URLSearchParams();
-      params.append('date', this.date + " " + this.hour);
-      params.append('pet', this.pet.id);
-      params.append('assigned_to', this.assigned_to.id);
-      params.append('service', this.service.id);
-      var requestBody = {
-        date: this.date + " " + this.hour,
-        pet: this.pet.id,
-        assigned_to: this.assigned_to.id,
-        service: this.service.id
-      };
-      var config = {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        }
-      };
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('api/appointments', qs__WEBPACK_IMPORTED_MODULE_1___default.a.stringify(requestBody), config).then(function (result) {
-        return console.log(result);
-      })["catch"](function (err) {
-        return console.log(err);
+
+      /*
+       const params = new URLSearchParams()
+       params.append('date', this.date + " " + this.hour)
+       params.append('pet', this.pet.id)
+       params.append('assigned_to', this.assigned_to.id)
+       params.append('service', this.service.id)
+      
+       const requestBody = {
+         date: this.date + " " + this.hour,
+         pet: this.pet.id,
+         assigned_to: this.assigned_to.id,
+         service: this.service.id,
+       } 
+       
+       const config = 
+       {
+         headers: 
+         {     
+           'Content-Type': 'application/x-www-form-urlencoded',
+         } 
+       }  
+       axios.post('api/appointments', qs.stringify(requestBody), config) 
+       .then((result) => console.log(result)).catch((err) => console.log(err))
+       */
+      Object(_plugins_axios__WEBPACK_IMPORTED_MODULE_0__["default"])({
+        method: 'post',
+        url: 'appointments',
+        data: qs__WEBPACK_IMPORTED_MODULE_1___default.a.stringify({
+          date: this.date + " " + this.hour,
+          pet: this.pet.id,
+          assigned_to: this.assigned_to.id,
+          service: this.service.id
+        })
+      }).then(function (response) {
+        return console.log(response);
+      })["catch"](function (error) {
+        return console.log(error);
       });
       /*
       this.newForumStatus  = 
@@ -64299,6 +64318,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Users_vue_vue_type_template_id_356d9c48___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/plugins/axios.js":
+/*!***************************************!*\
+  !*** ./resources/js/plugins/axios.js ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+
+axios__WEBPACK_IMPORTED_MODULE_0___default.a.defaults.headers.common = {
+  'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+  'X-Requested-With': 'XMLHttpRequest',
+  'Content-Type': 'Capplication/x-www-form-urlencoded'
+};
+axios__WEBPACK_IMPORTED_MODULE_0___default.a.defaults.baseURL = "http://localhost:8000/api/";
+/* harmony default export */ __webpack_exports__["default"] = (axios__WEBPACK_IMPORTED_MODULE_0___default.a);
 
 /***/ }),
 

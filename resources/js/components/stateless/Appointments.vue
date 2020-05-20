@@ -133,13 +133,13 @@ export default {
       },
       async refresh()
       {
-        let query = await axios.get("api/appointments")
-
+        let query = await axios.get("appointments")
+        console.log(query)
         query.data.data.forEach( async data =>
         {
-          let pet =  await axios.get("api/pets/" + data.pet)
-          let assigned_to = await axios.get("api/users/" + data.assigned_to)
-          let service = await axios.get("api/services/" + data.service)
+          let pet =  await axios.get("pets/" + data.pet)
+          let assigned_to = await axios.get("users/" + data.assigned_to)
+          let service = await axios.get("services/" + data.service)
 
           this.appointments.push({
             date: data.date,

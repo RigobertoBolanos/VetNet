@@ -18,8 +18,8 @@ class CreatePetsTable extends Migration
             $table->string('name');
             $table->string('breed');
             $table->integer('age');
-            $table->integer('owner');
-            $table->integer('medicalhistory')->unsigned();
+            $table->integer('owner')->unsigned();
+            $table->integer('medicalhistory')->unsigned()->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

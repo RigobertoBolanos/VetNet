@@ -55,10 +55,10 @@ class Service extends Model
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      **/
-    public function appointments()
+    public function appointment()
     {
-        return $this->belongsToMany(\App\Models\Appointment::class);
+        return $this->belongsTo(\App\Models\Appointment::class);
     }
 }
