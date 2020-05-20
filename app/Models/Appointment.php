@@ -73,10 +73,10 @@ class Appointment extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      **/
-    public function services()
+    public function service()
     {
-        return $this->belongsToMany(\App\Models\Service::class);
+        return $this->hasOne(\App\Models\Service::class);
     }
 }

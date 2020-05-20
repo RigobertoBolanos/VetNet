@@ -27,15 +27,10 @@ class CreateRelations extends Migration
             $table->foreign('pet')->references('id')->on('pets');
         });
 
-        Schema::table('appointment_service', function ($table) {
-            $table->foreign('appointment_id')->references('id')->on('appointments');
-            $table->foreign('service_id')->references('id')->on('services');
-        });
-
         Schema::table('appointments', function ($table) {
             $table->foreign('pet')->references('id')->on('pets');
-            $table->foreign('veterinary')->references('id')->on('users');
-            $table->foreign('services')->references('id')->on('services');
+            $table->foreign('assigned_to')->references('id')->on('users');
+            $table->foreign('service')->references('id')->on('services');
         });
     }
 

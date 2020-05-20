@@ -20,12 +20,13 @@ class CreateUsersTable extends Migration
             $table->string('fullname');
             $table->string('address');
             $table->string('phonenumber');
-            $table->string('professionalcard');
-            $table->string('academicdegrees');
+            $table->string('professionalcard')->nullable();
+            $table->string('academicdegrees')->nullable();
             $table->timestamps();
             $table->softDeletes();
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
+            $table->primary('id');
         });
     }
 
