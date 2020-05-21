@@ -18,7 +18,7 @@
 
           <v-card class="elevation-12" style="margin-bottom: 5%">
 
-            <v-toolbar color="primary" dark flat align-center>
+            <v-toolbar color="rgba(135, 169, 206,0.8)" dark flat align-center>
               <v-btn to="/pets" icon>
                 <v-icon x-large>mdi-arrow-left-bold-hexagon-outline</v-icon>
               </v-btn>
@@ -31,8 +31,8 @@
               <v-container fluid grid-list-md text-xs-center> 
                 <v-layout row wrap>
                   <v-flex xs6 child-flex>
-                      <v-card   color="primary">
-                        <v-card-text style="color:white">Pet Info</v-card-text>
+                      <v-card   color="rgba(254, 192, 220)">
+                        <v-card-text style="color:white; font-size:150%">Pet Info</v-card-text>
                       </v-card>
                       <v-flex style="text-align:left">
                         <v-card  class="elevation-4" style="margin-top:3%;padding-left:3%" >
@@ -46,8 +46,8 @@
                   </v-flex>
 
                   <v-flex xs6>
-                      <v-card  color="primary">
-                        <v-card-text style="color:white">Owner Info</v-card-text>
+                      <v-card  color="rgba(254, 192, 220)">
+                        <v-card-text style="color:white; font-size:150%">Owner Info</v-card-text>
                       </v-card>
                       <v-flex style="text-align:left">
                         <v-card class="elevation-4" style="margin-top:3%;padding-left:3%" >
@@ -65,8 +65,8 @@
             <v-card-actions>
               <v-spacer></v-spacer>
           
-                <v-btn class="ma-2" tile outlined color="blue" @click="add =true">
-                  <v-icon left >mdi-clipboard-plus-outline</v-icon> <small>New Medical Record</small>
+                <v-btn class="ma-2" tile  color="rgba(135, 169, 206,0.8)" @click="add =true">
+                  <v-icon color="white" >mdi-clipboard-plus-outline</v-icon> <small style="color:white">New Medical Record</small>
                 </v-btn>
             </v-card-actions>
           </v-card>
@@ -77,7 +77,7 @@
                   <v-expansion-panel v-for="record in records" :key="record.id">
                       <v-expansion-panel-header class="justify-self-start" disable-icon-rotate>
                         <div>
-                              <v-icon color="blue">mdi-calendar-month</v-icon>
+                              <v-icon color="rgba(135, 169, 206,0.8)">mdi-calendar-month</v-icon>
                                 <span>{{record.date}}</span>
                         </div>
                       </v-expansion-panel-header>
@@ -183,8 +183,8 @@
                             </template>
                             <v-date-picker v-model="newRecord.date">
                               <v-spacer></v-spacer>
-                              <v-btn text color="primary" @click="modal = false">Cancel</v-btn>
-                              <v-btn text color="primary" @click="$refs.dialog.save(date)">OK</v-btn>
+                              <v-btn text color="rgba(135, 169, 206,0.8)" @click="modal = false">Cancel</v-btn>
+                              <v-btn text color="rgba(135, 169, 206,0.8)" @click="$refs.dialog.save(date)">OK</v-btn>
                             </v-date-picker>
                             </v-dialog>
                         </v-container>

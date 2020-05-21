@@ -8,7 +8,7 @@
               :icon="newPetStatus.icon"
               transition="scale-transition"
             >{{newPetStatus.message}}</v-alert>
-      <v-toolbar style="background-color:#1976d2">
+      <v-toolbar style="background-color:rgba(135, 169, 206,0.8)">
         <v-toolbar-title style="color: white">Pets</v-toolbar-title>
         <v-spacer></v-spacer>
 
@@ -16,8 +16,8 @@
           <NewPet v-if="add" :petToUpdate="petToUpdate" @notifyNewPet="petAdded" @notifyNewPetStatus="showNewPetStatus" @closePetForm="closePetForm"></NewPet>
         </v-dialog>
 
-        <v-btn v-if="true" small fab color="blue" @click="add = !add">
-          <v-icon>{{ add ? 'mdi-minus' : 'mdi-plus' }}</v-icon>
+        <v-btn v-if="true" small fab color="white" @click="add = !add">
+          <v-icon color="rgba(135, 169, 206,0.8)">{{ add ? 'mdi-minus' : 'mdi-plus' }}</v-icon>
         </v-btn>
       </v-toolbar>
       <v-data-table

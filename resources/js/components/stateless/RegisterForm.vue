@@ -4,7 +4,7 @@
                 <v-layout justify-center>
                 <v-flex xs12 sm8 md4>
                     <v-card class="elevation-10">
-                    <v-toolbar color="primary" dark flat align-center>
+                    <v-toolbar color="rgba(135, 169, 206,0.8)" dark flat align-center>
                     <v-spacer />
                         <v-toolbar-title class="toolbarTitle">
                             Register
@@ -62,7 +62,7 @@
                         ></v-text-field>
                         </v-form>
                         <v-spacer>
-                            <v-btn type="submit" outlined color="primary" @click="register" :disabled="!valid">Submit</v-btn>
+                            <v-btn type="submit" outlined color="rgba(135, 169, 206,0.8)" @click="register" :disabled="!valid">Submit</v-btn>
                         </v-spacer>
                     </v-card-text>                   
                     </v-card>

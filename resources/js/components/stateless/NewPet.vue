@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-card class="elevation-12">
-      <v-toolbar color="primary" dark flat align-center>
+      <v-toolbar color="rgba(135, 169, 206,0.8)" dark flat align-center>
         <v-btn @click="closePetForm" icon>
                 <v-icon x-large>mdi-arrow-left-bold-hexagon-outline</v-icon>
           </v-btn>
@@ -56,7 +56,7 @@
           </v-col>
         </v-form>
         <v-spacer>
-          <v-btn type="submit" :disabled="!valid" outlined color="primary" @click="petToUpdate?updatePet():addPet()">
+          <v-btn type="submit" :disabled="!valid" outlined color="rgba(135, 169, 206,0.8)" @click="petToUpdate?updatePet():addPet()">
             <v-icon>mdi-login-variant</v-icon>
           </v-btn>
         </v-spacer>
