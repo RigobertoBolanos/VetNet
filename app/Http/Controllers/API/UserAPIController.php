@@ -60,6 +60,22 @@ class UserAPIController extends AppBaseController
 
         return $this->sendResponse($users, 'Employees retrieved successfully');
     }
+    /**
+     * Display a listing of the Veterinaries (Users with academicdegrees).
+     * GET|HEAD /veterinaries
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function veterinaries(Request $request)
+    {
+        $users = DB::table('users')
+                    ->select(DB::raw('*'))
+                    ->where('academicdegrees', '<>', null)
+                    ->get();
+
+        return $this->sendResponse($users, 'Veterinaries retrieved successfully');
+    }
 
     /**
      * Store a newly created User in storage.

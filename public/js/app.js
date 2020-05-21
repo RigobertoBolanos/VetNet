@@ -2158,11 +2158,50 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "MedicalHistory",
   data: function data() {
     return {
+      veterinaries: [],
+      modal: false,
       pet: {
         name: "",
         age: "",
@@ -2175,6 +2214,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }
       },
       medicalHistoryId: "",
+      medicalHistoryStatus: null,
       records: [],
       valid: true,
       edit: false,
@@ -2182,10 +2222,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       status: null,
       deletedialog: null,
       newRecord: {
-        consultationReason: "",
+        consultationreason: "",
         diagnosis: "",
-        treatment: "",
-        medicalhistory: ""
+        treatments: "",
+        medicalhistory: "",
+        date: new Date().toISOString().substr(0, 10),
+        veterinary: null
       }
     };
   },
@@ -2200,7 +2242,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var petData, ownerData, recordsData, tempRecords;
+        var petData, ownerData, query, recordsData, tempRecords;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -2216,6 +2258,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 6:
                 ownerData = _context.sent;
+                _context.next = 9;
+                return _plugins_axios__WEBPACK_IMPORTED_MODULE_1__["default"].get("veterinaries")["catch"](function (error) {
+                  return console.log(error);
+                });
+
+              case 9:
+                query = _context.sent;
+                _this.veterinaries = query.data.data;
                 _this.pet = {
                   name: petData.data.data.name,
                   age: petData.data.data.age,
@@ -2224,14 +2274,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   owner: {
                     fullname: ownerData.data.data.fullname,
                     address: ownerData.data.data.address,
-                    phoneNumber: ownerData.data.data.phonenumber
+                    phoneNumber: ownerData.data.data.phonenumber,
+                    id: ownerData.data.data.id,
+                    email: ownerData.data.data.email
                   }
                 };
                 _this.medicalHistoryId = petData.data.data.medicalhistory;
-                _context.next = 11;
+                _context.next = 15;
                 return _plugins_axios__WEBPACK_IMPORTED_MODULE_1__["default"].get("medicalHistory/medicalRecords/" + _this.medicalHistoryId);
 
-              case 11:
+              case 15:
                 recordsData = _context.sent;
                 tempRecords = [];
                 recordsData.data.data.forEach(function (record) {
@@ -2244,7 +2296,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   });
                 }
 
-              case 15:
+              case 19:
               case "end":
                 return _context.stop();
             }
@@ -2266,16 +2318,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this3 = this;
 
       this.newRecord.medicalhistory = this.medicalHistoryId;
-      _plugins_axios__WEBPACK_IMPORTED_MODULE_1__["default"].post('medicalrecords', this.newRecord).then(function () {
-        medicalHistoryStatus = {
+      this.newRecord.veterinary = this.newRecord.veterinary.id;
+      _plugins_axios__WEBPACK_IMPORTED_MODULE_1__["default"].post('medical_records', this.newRecord).then(function () {
+        _this3.medicalHistoryStatus = {
           type: 'success',
           message: 'Record added to History',
           icon: 'mdi-checkbox-marked-circle-outline'
         };
 
         _this3.closeNewRecord();
+
+        _this3.refresh();
       })["catch"](function (error) {
-        medicalHistoryStatus = {
+        this.medicalHistoryStatus = {
           type: "error",
           message: error.message,
           icon: "mdi-skull-outline"
@@ -7495,20 +7550,21 @@ var render = function() {
                               _vm._v(" "),
                               _c(
                                 "v-expansion-panel-content",
+                                { staticStyle: { "text-align": "left" } },
                                 [
                                   _c("v-card-subtitle", [
                                     _c("b", [_vm._v("Veterinary:")]),
                                     _vm._v(
                                       " " +
                                         _vm._s(record.veterinary.fullname) +
-                                        " v\r\n                        "
+                                        "\r\n                        "
                                     )
                                   ]),
                                   _vm._v(" "),
                                   _c("v-divider"),
                                   _vm._v(" "),
                                   _c("v-card-subtitle", [
-                                    _vm._v("Consultation Reason")
+                                    _c("b", [_vm._v("Consultation Reason")])
                                   ]),
                                   _vm._v(" "),
                                   _c(
@@ -7525,7 +7581,9 @@ var render = function() {
                                   _vm._v(" "),
                                   _c("v-divider"),
                                   _vm._v(" "),
-                                  _c("v-card-subtitle", [_vm._v("Diagnosis")]),
+                                  _c("v-card-subtitle", [
+                                    _c("b", [_vm._v("Diagnosis")])
+                                  ]),
                                   _vm._v(" "),
                                   _c(
                                     "v-container",
@@ -7541,7 +7599,9 @@ var render = function() {
                                   _vm._v(" "),
                                   _c("v-divider"),
                                   _vm._v(" "),
-                                  _c("v-card-subtitle", [_vm._v("Treatment")]),
+                                  _c("v-card-subtitle", [
+                                    _c("b", [_vm._v("Treatment")])
+                                  ]),
                                   _vm._v(" "),
                                   _c(
                                     "v-container",
@@ -7629,16 +7689,16 @@ var render = function() {
                                         },
                                         model: {
                                           value:
-                                            _vm.newRecord.consultationReason,
+                                            _vm.newRecord.consultationreason,
                                           callback: function($$v) {
                                             _vm.$set(
                                               _vm.newRecord,
-                                              "consultationReason",
+                                              "consultationreason",
                                               $$v
                                             )
                                           },
                                           expression:
-                                            "newRecord.consultationReason"
+                                            "newRecord.consultationreason"
                                         }
                                       }),
                                       _vm._v(" "),
@@ -7682,17 +7742,184 @@ var render = function() {
                                           ]
                                         },
                                         model: {
-                                          value: _vm.newRecord.treatment,
+                                          value: _vm.newRecord.treatments,
                                           callback: function($$v) {
                                             _vm.$set(
                                               _vm.newRecord,
-                                              "treatment",
+                                              "treatments",
                                               $$v
                                             )
                                           },
-                                          expression: "newRecord.treatment"
+                                          expression: "newRecord.treatments"
                                         }
-                                      })
+                                      }),
+                                      _vm._v(" "),
+                                      _c("v-select", {
+                                        attrs: {
+                                          items: _vm.veterinaries,
+                                          "prepend-icon":
+                                            "mdi-card-account-details-outline",
+                                          "item-text": "fullname",
+                                          rules: [
+                                            function(v) {
+                                              return (
+                                                !!v ||
+                                                "The veterinary responsible is required"
+                                              )
+                                            }
+                                          ],
+                                          label: "Veterinary",
+                                          "return-object": ""
+                                        },
+                                        model: {
+                                          value: _vm.newRecord.veterinary,
+                                          callback: function($$v) {
+                                            _vm.$set(
+                                              _vm.newRecord,
+                                              "veterinary",
+                                              $$v
+                                            )
+                                          },
+                                          expression: "newRecord.veterinary"
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-dialog",
+                                        {
+                                          ref: "dialog",
+                                          attrs: {
+                                            "return-value": _vm.newRecord.date,
+                                            persistent: "",
+                                            width: "290px"
+                                          },
+                                          on: {
+                                            "update:returnValue": function(
+                                              $event
+                                            ) {
+                                              return _vm.$set(
+                                                _vm.newRecord,
+                                                "date",
+                                                $event
+                                              )
+                                            },
+                                            "update:return-value": function(
+                                              $event
+                                            ) {
+                                              return _vm.$set(
+                                                _vm.newRecord,
+                                                "date",
+                                                $event
+                                              )
+                                            }
+                                          },
+                                          scopedSlots: _vm._u([
+                                            {
+                                              key: "activator",
+                                              fn: function(ref) {
+                                                var on = ref.on
+                                                return [
+                                                  _c(
+                                                    "v-text-field",
+                                                    _vm._g(
+                                                      {
+                                                        attrs: {
+                                                          label:
+                                                            "Appointment's date",
+                                                          "prepend-icon":
+                                                            "mdi-calendar-month",
+                                                          readonly: ""
+                                                        },
+                                                        model: {
+                                                          value:
+                                                            _vm.newRecord.date,
+                                                          callback: function(
+                                                            $$v
+                                                          ) {
+                                                            _vm.$set(
+                                                              _vm.newRecord,
+                                                              "date",
+                                                              $$v
+                                                            )
+                                                          },
+                                                          expression:
+                                                            "newRecord.date"
+                                                        }
+                                                      },
+                                                      on
+                                                    )
+                                                  )
+                                                ]
+                                              }
+                                            }
+                                          ]),
+                                          model: {
+                                            value: _vm.modal,
+                                            callback: function($$v) {
+                                              _vm.modal = $$v
+                                            },
+                                            expression: "modal"
+                                          }
+                                        },
+                                        [
+                                          _vm._v(" "),
+                                          _c(
+                                            "v-date-picker",
+                                            {
+                                              model: {
+                                                value: _vm.newRecord.date,
+                                                callback: function($$v) {
+                                                  _vm.$set(
+                                                    _vm.newRecord,
+                                                    "date",
+                                                    $$v
+                                                  )
+                                                },
+                                                expression: "newRecord.date"
+                                              }
+                                            },
+                                            [
+                                              _c("v-spacer"),
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-btn",
+                                                {
+                                                  attrs: {
+                                                    text: "",
+                                                    color: "primary"
+                                                  },
+                                                  on: {
+                                                    click: function($event) {
+                                                      _vm.modal = false
+                                                    }
+                                                  }
+                                                },
+                                                [_vm._v("Cancel")]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-btn",
+                                                {
+                                                  attrs: {
+                                                    text: "",
+                                                    color: "primary"
+                                                  },
+                                                  on: {
+                                                    click: function($event) {
+                                                      return _vm.$refs.dialog.save(
+                                                        _vm.date
+                                                      )
+                                                    }
+                                                  }
+                                                },
+                                                [_vm._v("OK")]
+                                              )
+                                            ],
+                                            1
+                                          )
+                                        ],
+                                        1
+                                      )
                                     ],
                                     1
                                   )
@@ -66602,7 +66829,6 @@ var map = {
 	"./stateless/Appointments.vue": "./resources/js/components/stateless/Appointments.vue",
 	"./stateless/LogInForm.vue": "./resources/js/components/stateless/LogInForm.vue",
 	"./stateless/NewAppointment.vue": "./resources/js/components/stateless/NewAppointment.vue",
-	"./stateless/NewMedicalRecord.vue": "./resources/js/components/stateless/NewMedicalRecord.vue",
 	"./stateless/NewPet.vue": "./resources/js/components/stateless/NewPet.vue",
 	"./stateless/Pets.vue": "./resources/js/components/stateless/Pets.vue",
 	"./stateless/RegisterForm.vue": "./resources/js/components/stateless/RegisterForm.vue",
@@ -67310,38 +67536,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/stateless/NewMedicalRecord.vue":
-/*!****************************************************************!*\
-  !*** ./resources/js/components/stateless/NewMedicalRecord.vue ***!
-  \****************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-var render, staticRenderFns
-var script = {}
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__["default"])(
-  script,
-  render,
-  staticRenderFns,
-  false,
-  null,
-  null,
-  null
-  
-)
-
-component.options.__file = "resources/js/components/stateless/NewMedicalRecord.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
 /***/ "./resources/js/components/stateless/NewPet.vue":
 /*!******************************************************!*\
   !*** ./resources/js/components/stateless/NewPet.vue ***!
@@ -67883,8 +68077,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! F:\icesi\git\VetNet\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! F:\icesi\git\VetNet\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\juand\Documents\Programación-Web-Avanzada\VetNet\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\juand\Documents\Programación-Web-Avanzada\VetNet\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

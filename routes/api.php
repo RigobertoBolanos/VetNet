@@ -33,3 +33,5 @@ Route::resource('appointments', 'AppointmentAPIController');
 Route::get('employees', 'UserAPIController@employees');
 
 Route::get('medicalHistory/medicalRecords/{medicalHistoryId}', 'MedicalRecordAPIController@findByMedicalHistory');
+
+Route::get('veterinaries', 'UserAPIController@veterinaries');

@@ -82,29 +82,35 @@
                         </div>
                       </v-expansion-panel-header>
 
-                      <v-expansion-panel-content>
+                      <v-expansion-panel-content style="text-align:left">
                         
                         <v-card-subtitle>
-                          <b>Veterinary:</b> {{record.veterinary.fullname}} v
+                          <b>Veterinary:</b> {{record.veterinary.fullname}}
                         </v-card-subtitle>
 
                         <v-divider></v-divider>
 
-                        <v-card-subtitle>Consultation Reason</v-card-subtitle>
+                        <v-card-subtitle>
+                          <b>Consultation Reason</b>
+                        </v-card-subtitle>
                         <v-container style="padding-left:5%"> 
                           {{record.consultationreason}} 
                         </v-container>
 
                         <v-divider></v-divider>
 
-                        <v-card-subtitle>Diagnosis</v-card-subtitle>
+                        <v-card-subtitle>
+                          <b>Diagnosis</b>
+                          </v-card-subtitle>
                         <v-container style="padding-left:5%">
                           {{record.diagnosis}}
                         </v-container>
 
                         <v-divider></v-divider>
 
-                        <v-card-subtitle>Treatment</v-card-subtitle>
+                        <v-card-subtitle>
+                          <b>Treatment</b>
+                        </v-card-subtitle>
                         <v-container style="padding-left:5%">
                           {{record.treatments}}
                         </v-container>
@@ -132,7 +138,7 @@
                               label="Consultation Reason*"
                               no-resize
                               :rules="[v => !!v || 'This field is required']"
-                              v-model="newRecord.consultationReason"
+                              v-model="newRecord.consultationreason"
                             ></v-textarea>
 
                             <v-textarea
@@ -148,18 +154,49 @@
                               label="Treatments*"
                               no-resize
                               :rules="[v => !!v || 'This field is required']"
-                              v-model="newRecord.treatment"
+                              v-model="newRecord.treatments"
                             ></v-textarea>
-                          </v-container>
-                    </v-form>
-                    <small>* indicates required field</small>
-                  </v-card-text>
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn text @click="closeNewRecord">Close</v-btn>
-                    <v-btn type="submit" text @click="addRecord" >Save</v-btn>
-                  </v-card-actions>
-                </v-card>
+                            <v-select
+                              v-model="newRecord.veterinary"
+                              :items="veterinaries"
+                              prepend-icon="mdi-card-account-details-outline"
+                              item-text="fullname"
+                              :rules="[v => !!v || 'The veterinary responsible is required']"
+                              label="Veterinary"
+                              return-object
+                            ></v-select>
+                            <v-dialog
+                              ref="dialog"
+                              v-model="modal"
+                              :return-value.sync="newRecord.date"
+                              persistent
+                              width="290px"
+                            >
+                            <template v-slot:activator="{ on }">
+                              <v-text-field
+                                v-model="newRecord.date"
+                                label="Appointment's date"
+                                prepend-icon="mdi-calendar-month"
+                                readonly
+                                v-on="on"
+                              ></v-text-field>
+                            </template>
+                            <v-date-picker v-model="newRecord.date">
+                              <v-spacer></v-spacer>
+                              <v-btn text color="primary" @click="modal = false">Cancel</v-btn>
+                              <v-btn text color="primary" @click="$refs.dialog.save(date)">OK</v-btn>
+                            </v-date-picker>
+                            </v-dialog>
+                        </v-container>
+                      </v-form>
+                      <small>* indicates required field</small>
+                      </v-card-text>
+                      <v-card-actions>
+                          <v-spacer></v-spacer>
+                          <v-btn text @click="closeNewRecord">Close</v-btn>
+                          <v-btn type="submit" text @click="addRecord" >Save</v-btn>
+                        </v-card-actions>
+                      </v-card>
               </v-dialog>
             </v-row>
         </v-flex>
@@ -173,6 +210,8 @@ export default {
   name: "MedicalHistory",
   data() {
     return {
+      veterinaries: [],
+      modal: false,
       pet: {
         name : "",
         age: "",
@@ -185,6 +224,7 @@ export default {
         }
       },
       medicalHistoryId: "",
+      medicalHistoryStatus: null,
       records: [],
       valid:true,
       edit: false,
@@ -192,10 +232,12 @@ export default {
       status: null,
       deletedialog: null,
       newRecord:{
-        consultationReason:"",
+        consultationreason:"",
         diagnosis:"",
-        treatment:"",
-        medicalhistory: ""
+        treatments:"",
+        medicalhistory: "",
+        date: new Date().toISOString().substr(0, 10),
+        veterinary: null
       }
     };
   },
@@ -211,6 +253,10 @@ export default {
       let petData = await axios.get("pets/" + this.$route.params.petId)
       let ownerData = await axios.get("users/"+petData.data.data.owner)
 
+      let query = await axios.get("veterinaries")
+      .catch((error) => console.log(error))
+      this.veterinaries = query.data.data
+
       this.pet = {
         name : petData.data.data.name,
         age: petData.data.data.age,
@@ -219,7 +265,9 @@ export default {
         owner: {
           fullname: ownerData.data.data.fullname,
           address: ownerData.data.data.address,
-          phoneNumber: ownerData.data.data.phonenumber
+          phoneNumber: ownerData.data.data.phonenumber,
+          id: ownerData.data.data.id,
+          email: ownerData.data.data.email
         }
       }
 
@@ -244,18 +292,20 @@ export default {
     addRecord() 
     {
       this.newRecord.medicalhistory = this.medicalHistoryId
-      axios.post('medicalrecords', this.newRecord).then(() =>
+      this.newRecord.veterinary = this.newRecord.veterinary.id
+      axios.post('medical_records', this.newRecord).then(() =>
       {
-        medicalHistoryStatus  = 
+        this.medicalHistoryStatus  = 
         {
             type: 'success',
             message: 'Record added to History',
             icon: 'mdi-checkbox-marked-circle-outline'
         }
         this.closeNewRecord()
+        this.refresh()
       }).catch(function(error) 
       {
-        medicalHistoryStatus = 
+        this.medicalHistoryStatus = 
         {
           type: "error",
           message: error.message,
