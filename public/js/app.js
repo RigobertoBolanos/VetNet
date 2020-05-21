@@ -7235,7 +7235,7 @@ var render = function() {
                     "v-toolbar",
                     {
                       attrs: {
-                        color: "primary",
+                        color: "rgba(135, 169, 206,0.8)",
                         dark: "",
                         flat: "",
                         "align-center": ""
@@ -7289,11 +7289,16 @@ var render = function() {
                                 [
                                   _c(
                                     "v-card",
-                                    { attrs: { color: "primary" } },
+                                    { attrs: { color: "rgba(254, 192, 220)" } },
                                     [
                                       _c(
                                         "v-card-text",
-                                        { staticStyle: { color: "white" } },
+                                        {
+                                          staticStyle: {
+                                            color: "white",
+                                            "font-size": "150%"
+                                          }
+                                        },
                                         [_vm._v("Pet Info")]
                                       )
                                     ],
@@ -7376,11 +7381,16 @@ var render = function() {
                                 [
                                   _c(
                                     "v-card",
-                                    { attrs: { color: "primary" } },
+                                    { attrs: { color: "rgba(254, 192, 220)" } },
                                     [
                                       _c(
                                         "v-card-text",
-                                        { staticStyle: { color: "white" } },
+                                        {
+                                          staticStyle: {
+                                            color: "white",
+                                            "font-size": "150%"
+                                          }
+                                        },
                                         [_vm._v("Owner Info")]
                                       )
                                     ],
@@ -7491,7 +7501,7 @@ var render = function() {
                         "v-btn",
                         {
                           staticClass: "ma-2",
-                          attrs: { tile: "", outlined: "", color: "blue" },
+                          attrs: { tile: "", color: "rgba(135, 169, 206,0.8)" },
                           on: {
                             click: function($event) {
                               _vm.add = true
@@ -7499,11 +7509,13 @@ var render = function() {
                           }
                         },
                         [
-                          _c("v-icon", { attrs: { left: "" } }, [
+                          _c("v-icon", { attrs: { color: "white" } }, [
                             _vm._v("mdi-clipboard-plus-outline")
                           ]),
                           _vm._v(" "),
-                          _c("small", [_vm._v("New Medical Record")])
+                          _c("small", { staticStyle: { color: "white" } }, [
+                            _vm._v("New Medical Record")
+                          ])
                         ],
                         1
                       )
@@ -7538,7 +7550,11 @@ var render = function() {
                                     [
                                       _c(
                                         "v-icon",
-                                        { attrs: { color: "blue" } },
+                                        {
+                                          attrs: {
+                                            color: "rgba(135, 169, 206,0.8)"
+                                          }
+                                        },
                                         [_vm._v("mdi-calendar-month")]
                                       ),
                                       _vm._v(" "),
@@ -7887,7 +7903,8 @@ var render = function() {
                                                 {
                                                   attrs: {
                                                     text: "",
-                                                    color: "primary"
+                                                    color:
+                                                      "rgba(135, 169, 206,0.8)"
                                                   },
                                                   on: {
                                                     click: function($event) {
@@ -7903,7 +7920,8 @@ var render = function() {
                                                 {
                                                   attrs: {
                                                     text: "",
-                                                    color: "primary"
+                                                    color:
+                                                      "rgba(135, 169, 206,0.8)"
                                                   },
                                                   on: {
                                                     click: function($event) {
@@ -8326,7 +8344,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "v-toolbar",
-        { staticStyle: { "background-color": "#1976d2" } },
+        { staticStyle: { "background-color": "rgba(135, 169, 206,0.8)" } },
         [
           _c("v-toolbar-title", { staticStyle: { color: "white" } }, [
             _vm._v("Appointments")
@@ -8365,7 +8383,7 @@ var render = function() {
             ? _c(
                 "v-btn",
                 {
-                  attrs: { small: "", fab: "", color: "blue" },
+                  attrs: { small: "", fab: "", color: "white" },
                   on: {
                     click: function($event) {
                       _vm.add = !_vm.add
@@ -8373,9 +8391,11 @@ var render = function() {
                   }
                 },
                 [
-                  _c("v-icon", [
-                    _vm._v(_vm._s(_vm.add ? "mdi-minus" : "mdi-plus"))
-                  ])
+                  _c(
+                    "v-icon",
+                    { attrs: { medium: "", color: "rgba(135, 169, 206,0.8)" } },
+                    [_vm._v(_vm._s(_vm.add ? "mdi-minus" : "mdi-plus"))]
+                  )
                 ],
                 1
               )
@@ -8525,7 +8545,7 @@ var render = function() {
                         "v-toolbar",
                         {
                           attrs: {
-                            color: "primary",
+                            color: "rgba(135, 169, 206,0.8)",
                             dark: "",
                             flat: "",
                             "align-center": ""
@@ -8617,7 +8637,7 @@ var render = function() {
                                   attrs: {
                                     type: "submit",
                                     outlined: "",
-                                    color: "primary",
+                                    color: "rgba(135, 169, 206,0.8)",
                                     disabled: !_vm.valid
                                   },
                                   on: { click: _vm.logIn }
@@ -8708,7 +8728,7 @@ var render = function() {
             "v-toolbar",
             {
               attrs: {
-                color: "primary",
+                color: "rgba(135, 169, 206,0.8)",
                 dark: "",
                 flat: "",
                 "align-center": ""
@@ -8960,7 +8980,10 @@ var render = function() {
                               _c(
                                 "v-btn",
                                 {
-                                  attrs: { text: "", color: "primary" },
+                                  attrs: {
+                                    text: "",
+                                    color: "rgba(135, 169, 206,0.8)"
+                                  },
                                   on: {
                                     click: function($event) {
                                       _vm.modal = false
@@ -8973,7 +8996,10 @@ var render = function() {
                               _c(
                                 "v-btn",
                                 {
-                                  attrs: { text: "", color: "primary" },
+                                  attrs: {
+                                    text: "",
+                                    color: "rgba(135, 169, 206,0.8)"
+                                  },
                                   on: {
                                     click: function($event) {
                                       return _vm.$refs.dialog.save(_vm.date)
@@ -9039,7 +9065,7 @@ var render = function() {
                         type: "submit",
                         disabled: !_vm.valid,
                         outlined: "",
-                        color: "primary"
+                        color: "rgba(135, 169, 206,0.8)"
                       },
                       on: {
                         click: function($event) {
@@ -9098,7 +9124,7 @@ var render = function() {
             "v-toolbar",
             {
               attrs: {
-                color: "primary",
+                color: "rgba(135, 169, 206,0.8)",
                 dark: "",
                 flat: "",
                 "align-center": ""
@@ -9280,7 +9306,7 @@ var render = function() {
                         type: "submit",
                         disabled: !_vm.valid,
                         outlined: "",
-                        color: "primary"
+                        color: "rgba(135, 169, 206,0.8)"
                       },
                       on: {
                         click: function($event) {
@@ -9348,7 +9374,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "v-toolbar",
-        { staticStyle: { "background-color": "#1976d2" } },
+        { staticStyle: { "background-color": "rgba(135, 169, 206,0.8)" } },
         [
           _c("v-toolbar-title", { staticStyle: { color: "white" } }, [
             _vm._v("Pets")
@@ -9387,7 +9413,7 @@ var render = function() {
             ? _c(
                 "v-btn",
                 {
-                  attrs: { small: "", fab: "", color: "blue" },
+                  attrs: { small: "", fab: "", color: "white" },
                   on: {
                     click: function($event) {
                       _vm.add = !_vm.add
@@ -9395,9 +9421,11 @@ var render = function() {
                   }
                 },
                 [
-                  _c("v-icon", [
-                    _vm._v(_vm._s(_vm.add ? "mdi-minus" : "mdi-plus"))
-                  ])
+                  _c(
+                    "v-icon",
+                    { attrs: { color: "rgba(135, 169, 206,0.8)" } },
+                    [_vm._v(_vm._s(_vm.add ? "mdi-minus" : "mdi-plus"))]
+                  )
                 ],
                 1
               )
@@ -9658,7 +9686,7 @@ var render = function() {
                         "v-toolbar",
                         {
                           attrs: {
-                            color: "primary",
+                            color: "rgba(135, 169, 206,0.8)",
                             dark: "",
                             flat: "",
                             "align-center": ""
@@ -9809,7 +9837,7 @@ var render = function() {
                                   attrs: {
                                     type: "submit",
                                     outlined: "",
-                                    color: "primary",
+                                    color: "rgba(135, 169, 206,0.8)",
                                     disabled: !_vm.valid
                                   },
                                   on: { click: _vm.register }
@@ -68079,8 +68107,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\juand\Documents\Programación-Web-Avanzada\VetNet\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\juand\Documents\Programación-Web-Avanzada\VetNet\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! F:\icesi\git\VetNet\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! F:\icesi\git\VetNet\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

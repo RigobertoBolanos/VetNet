@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-card class="elevation-12">
-      <v-toolbar color="primary" dark flat align-center>
+      <v-toolbar color="rgba(135, 169, 206,0.8)" dark flat align-center>
         <v-btn @click="closeAppointmentForm" icon>
                 <v-icon x-large>mdi-arrow-left-bold-hexagon-outline</v-icon>
           </v-btn>
@@ -78,8 +78,8 @@
               </template>
               <v-date-picker v-model="date">
                 <v-spacer></v-spacer>
-                <v-btn text color="primary" @click="modal = false">Cancel</v-btn>
-                <v-btn text color="primary" @click="$refs.dialog.save(date)">OK</v-btn>
+                <v-btn text color="rgba(135, 169, 206,0.8)" @click="modal = false">Cancel</v-btn>
+                <v-btn text color="rgba(135, 169, 206,0.8)" @click="$refs.dialog.save(date)">OK</v-btn>
               </v-date-picker>
             </v-dialog>
           </v-col>
@@ -96,7 +96,7 @@
           </v-col>
         </v-form>
         <v-spacer>
-          <v-btn type="submit" :disabled="!valid" outlined color="primary" @click="appointment?updateAppointment():addAppointment()">
+          <v-btn type="submit" :disabled="!valid" outlined color="rgba(135, 169, 206,0.8)" @click="appointment?updateAppointment():addAppointment()">
             <v-icon>mdi-login-variant</v-icon>
           </v-btn>
         </v-spacer>
