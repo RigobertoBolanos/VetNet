@@ -8966,6 +8966,7 @@ var render = function() {
                           _c(
                             "v-date-picker",
                             {
+                              attrs: { color: "rgba(135, 169, 206,0.8)" },
                               model: {
                                 value: _vm.date,
                                 callback: function($$v) {
@@ -68107,8 +68108,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! F:\icesi\git\VetNet\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! F:\icesi\git\VetNet\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\juand\Documents\Programación-Web-Avanzada\VetNet\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\juand\Documents\Programación-Web-Avanzada\VetNet\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

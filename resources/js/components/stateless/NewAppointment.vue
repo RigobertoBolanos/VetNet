@@ -76,7 +76,7 @@
                   v-on="on"
                 ></v-text-field>
               </template>
-              <v-date-picker v-model="date">
+              <v-date-picker v-model="date" color="rgba(135, 169, 206,0.8)">
                 <v-spacer></v-spacer>
                 <v-btn text color="rgba(135, 169, 206,0.8)" @click="modal = false">Cancel</v-btn>
                 <v-btn text color="rgba(135, 169, 206,0.8)" @click="$refs.dialog.save(date)">OK</v-btn>
