@@ -15,7 +15,7 @@ export default {
   computed: {
   },
   components: {
-    toolbar : Toolbar
+    toolbar : Toolbar,
   }
 }
 </script>

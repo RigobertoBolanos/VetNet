@@ -2173,6 +2173,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       edit: false,
       add: false,
       status: null,
+      deletedialog: null,
       newRecord: {
         consultationReason: "",
         diagnosis: "",
@@ -2193,7 +2194,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _this.records = [];
                 _context.next = 3;
-                return _plugins_axios__WEBPACK_IMPORTED_MODULE_1__["default"].get("pets/" + _this.$route.params.id);
+                return _plugins_axios__WEBPACK_IMPORTED_MODULE_1__["default"].get("pets/" + _this.$route.params.petId);
 
               case 3:
                 petData = _context.sent;
@@ -2220,17 +2221,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 11:
                 recordsData = _context.sent;
                 tempRecords = [];
+                console.log(recordsData);
                 recordsData.data.data.forEach(function (record) {
-                  _this.tempRecords.push(record);
+                  tempRecords.push(record);
                 });
+                console.log(tempRecords);
 
                 if (tempRecords.length > 0) {
-                  _this.records = recordsData.sort(function (a, b) {
+                  _this.records = tempRecords.sort(function (a, b) {
                     return a.date - b.date;
                   });
                 }
 
-              case 15:
+              case 17:
               case "end":
                 return _context.stop();
             }
@@ -6872,7 +6875,7 @@ var render = function() {
                                 { attrs: { dark: "", color: "primary" } },
                                 [
                                   _c("v-card-text", { staticClass: "px-0" }, [
-                                    _vm._v("Age: " + _vm._s(_vm.pet.agre))
+                                    _vm._v("Age: " + _vm._s(_vm.pet.age))
                                   ])
                                 ],
                                 1
@@ -6929,7 +6932,8 @@ var render = function() {
                                 [
                                   _c("v-card-text", { staticClass: "px-0" }, [
                                     _vm._v(
-                                      "Breed: " + _vm._s(_vm.pet.owner.address)
+                                      "Address: " +
+                                        _vm._s(_vm.pet.owner.address)
                                     )
                                   ])
                                 ],
@@ -6949,7 +6953,7 @@ var render = function() {
                                 [
                                   _c("v-card-text", { staticClass: "px-0" }, [
                                     _vm._v(
-                                      "Age: " +
+                                      "Phone number: " +
                                         _vm._s(_vm.pet.owner.phoneNumber)
                                     )
                                   ])
@@ -7004,7 +7008,7 @@ var render = function() {
             1
           ),
           _vm._v(" "),
-          _vm.records.lengt > 0
+          _vm.records.length > 0
             ? _c(
                 "v-card-text",
                 [
@@ -7020,7 +7024,8 @@ var render = function() {
                             "v-expansion-panel-header",
                             [
                               _c("v-icon", [_vm._v("mdi-calendar-month")]),
-                              _vm._v(" " + _vm._s(record.date))
+                              _vm._v(" " + _vm._s(record.date)),
+                              _c("v-spacer")
                             ],
                             1
                           ),
@@ -66883,7 +66888,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
     path: '/appointments',
     component: _components_stateless_Appointments__WEBPACK_IMPORTED_MODULE_4__["default"]
   }, {
-    path: '/pets/medicalHistory/{petId}',
+    path: '/pets/medicalHistory/:petId',
     component: _components_statefull_MedicalHistory__WEBPACK_IMPORTED_MODULE_6__["default"]
   }]
 }));

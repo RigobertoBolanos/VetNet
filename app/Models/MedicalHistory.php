@@ -49,11 +49,11 @@ class MedicalHistory extends Model
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      **/
     public function pet()
     {
-        return $this->hasOne(\App\Models\Pet::class);
+        return $this->belongsTo(\App\Models\Pet::class);
     }
 
     /**
