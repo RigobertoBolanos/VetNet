@@ -44,11 +44,21 @@
             </v-tooltip>
           </div>
           <div class="itemAction">
-            <v-icon v-if="true" color="purple" @click="updatePet(item)">mdi-circle-edit-outline</v-icon>
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on }">
+                <v-icon v-if="true" v-on="on" color="purple" @click="updatePet(item)">mdi-circle-edit-outline</v-icon>
+              </template>
+              <span>Edit Pet</span>
+            </v-tooltip>
           </div>
 
           <div class="itemAction">
-            <v-icon v-if="true" color="red" @click="deletePet(item)">mdi-trash-can-outline</v-icon>
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on }">
+            <v-icon v-if="true" v-on="on" color="red" @click="deletePet(item)">mdi-trash-can-outline</v-icon>
+              </template>
+              <span>Delete Pet</span>
+            </v-tooltip>
           </div>
 
         </div>
