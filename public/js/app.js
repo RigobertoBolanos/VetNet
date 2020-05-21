@@ -2153,6 +2153,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "MedicalHistory",
@@ -2185,6 +2190,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
   },
   methods: {
+    closeNewRecord: function closeNewRecord() {
+      this.add = false;
+      this.newRecord.consultationReason = null;
+      this.newRecord.diagnosis = null;
+      this.newRecord.treatment = null;
+    },
     refresh: function refresh() {
       var _this = this;
 
@@ -2252,6 +2263,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }, 2000);
     },
     addRecord: function addRecord() {
+      var _this3 = this;
+
       this.newRecord.medicalhistory = this.medicalHistoryId;
       _plugins_axios__WEBPACK_IMPORTED_MODULE_1__["default"].post('medicalrecords', this.newRecord).then(function () {
         medicalHistoryStatus = {
@@ -2259,6 +2272,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           message: 'Record added to History',
           icon: 'mdi-checkbox-marked-circle-outline'
         };
+
+        _this3.closeNewRecord();
       })["catch"](function (error) {
         medicalHistoryStatus = {
           type: "error",
@@ -3829,7 +3844,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.toolbarTitle[data-v-d73fbb06] {\r\n  font-size: 180%;\n}\n.col[data-v-d73fbb06] {\r\n  padding: 0px;\n}\n.v-alert[data-v-d73fbb06]{\r\n  margin: 0px;\n}\n.v-card__actions[data-v-d73fbb06] {\r\n  padding: 0px;\r\n  background: #1976d2;\n}\n.content[data-v-d73fbb06]{\r\n  margin: 1% 3% 2% 3%;\n}\r\n", ""]);
+exports.push([module.i, "\n.toolbarTitle[data-v-d73fbb06] {\r\n  font-size: 180%;\n}\n.col[data-v-d73fbb06] {\r\n  padding: 0px;\n}\n.v-alert[data-v-d73fbb06]{\r\n  margin: 0px;\n}\n.content[data-v-d73fbb06]{\r\n  margin: 1% 3% 2% 3%;\n}\r\n", ""]);
 
 // exports
 
@@ -7088,27 +7103,22 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "v-layout",
-    { attrs: { "justify-center": "" } },
+    "v-container",
+    { staticStyle: { "margin-top": "3%" } },
     [
       _c(
-        "v-flex",
-        { attrs: { xs14: "", sm12: "", md10: "" } },
+        "v-layout",
+        {
+          staticStyle: { "padding-left": "8%", "padding-right": "8%" },
+          attrs: { "justify-center": "" }
+        },
         [
           _c(
-            "v-dialog",
-            {
-              model: {
-                value: _vm.deletedialog,
-                callback: function($$v) {
-                  _vm.deletedialog = $$v
-                },
-                expression: "deletedialog"
-              }
-            },
+            "v-flex",
+            { attrs: { xs14: "", sm12: "", md10: "" } },
             [
               _c(
-                "v-card",
+                "v-dialog",
                 {
                   model: {
                     value: _vm.deletedialog,
@@ -7119,230 +7129,290 @@ var render = function() {
                   }
                 },
                 [
-                  _vm.status != null
-                    ? _c(
-                        "v-alert",
-                        {
-                          attrs: {
-                            type: _vm.status.type,
-                            outlined: "",
-                            text: "",
-                            icon: _vm.status.icon,
-                            transition: "scale-transition"
-                          }
-                        },
-                        [_vm._v(_vm._s(_vm.status.message) + "\n          ")]
-                      )
-                    : _vm._e()
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-card",
-            {
-              staticClass: "elevation-12",
-              staticStyle: { "margin-bottom": "5%" }
-            },
-            [
-              _c(
-                "v-toolbar",
-                {
-                  attrs: {
-                    color: "primary",
-                    dark: "",
-                    flat: "",
-                    "align-center": ""
-                  }
-                },
-                [
                   _c(
-                    "v-btn",
-                    { attrs: { to: "/pets", icon: "" } },
+                    "v-card",
+                    {
+                      model: {
+                        value: _vm.deletedialog,
+                        callback: function($$v) {
+                          _vm.deletedialog = $$v
+                        },
+                        expression: "deletedialog"
+                      }
+                    },
                     [
-                      _c("v-icon", { attrs: { "x-large": "" } }, [
-                        _vm._v("mdi-arrow-left-bold-hexagon-outline")
-                      ])
+                      _vm.status != null
+                        ? _c(
+                            "v-alert",
+                            {
+                              attrs: {
+                                type: _vm.status.type,
+                                outlined: "",
+                                text: "",
+                                icon: _vm.status.icon,
+                                transition: "scale-transition"
+                              }
+                            },
+                            [
+                              _vm._v(
+                                _vm._s(_vm.status.message) +
+                                  "\r\n                "
+                              )
+                            ]
+                          )
+                        : _vm._e()
                     ],
                     1
-                  ),
-                  _vm._v(" "),
-                  _c("v-spacer"),
-                  _vm._v(" "),
-                  _c("v-toolbar-title", { staticClass: "toolbarTitle" }, [
-                    _vm._v("Medical History #" + _vm._s(_vm.medicalHistoryId))
-                  ]),
-                  _vm._v(" "),
-                  _c("v-spacer")
+                  )
                 ],
                 1
               ),
               _vm._v(" "),
               _c(
-                "v-card-subtitle",
+                "v-card",
+                {
+                  staticClass: "elevation-12",
+                  staticStyle: { "margin-bottom": "5%" }
+                },
                 [
                   _c(
-                    "v-container",
+                    "v-toolbar",
                     {
                       attrs: {
-                        fluid: "",
-                        "grid-list-md": "",
-                        "text-xs-center": ""
+                        color: "primary",
+                        dark: "",
+                        flat: "",
+                        "align-center": ""
                       }
                     },
                     [
                       _c(
-                        "v-layout",
-                        { attrs: { row: "", wrap: "" } },
+                        "v-btn",
+                        { attrs: { to: "/pets", icon: "" } },
+                        [
+                          _c("v-icon", { attrs: { "x-large": "" } }, [
+                            _vm._v("mdi-arrow-left-bold-hexagon-outline")
+                          ])
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("v-spacer"),
+                      _vm._v(" "),
+                      _c("v-toolbar-title", { staticClass: "toolbarTitle" }, [
+                        _vm._v(
+                          "Medical History No." + _vm._s(_vm.medicalHistoryId)
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("v-spacer")
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-card-subtitle",
+                    [
+                      _c(
+                        "v-container",
+                        {
+                          attrs: {
+                            fluid: "",
+                            "grid-list-md": "",
+                            "text-xs-center": ""
+                          }
+                        },
                         [
                           _c(
-                            "v-flex",
-                            { attrs: { xs12: "" } },
+                            "v-layout",
+                            { attrs: { row: "", wrap: "" } },
                             [
                               _c(
-                                "v-card",
-                                { attrs: { dark: "", color: "primary" } },
+                                "v-flex",
+                                { attrs: { xs6: "", "child-flex": "" } },
                                 [
-                                  _c("v-card-text", { staticClass: "px-0" }, [
-                                    _vm._v("Name: " + _vm._s(_vm.pet.name))
-                                  ])
+                                  _c(
+                                    "v-card",
+                                    { attrs: { color: "primary" } },
+                                    [
+                                      _c(
+                                        "v-card-text",
+                                        { staticStyle: { color: "white" } },
+                                        [_vm._v("Pet Info")]
+                                      )
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-flex",
+                                    { staticStyle: { "text-align": "left" } },
+                                    [
+                                      _c(
+                                        "v-card",
+                                        {
+                                          staticClass: "elevation-4",
+                                          staticStyle: {
+                                            "margin-top": "3%",
+                                            "padding-left": "3%"
+                                          }
+                                        },
+                                        [
+                                          _c(
+                                            "v-card-text",
+                                            { staticClass: "px-0" },
+                                            [
+                                              _c("b", [_vm._v("Name:")]),
+                                              _vm._v(" " + _vm._s(_vm.pet.name))
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "v-card-text",
+                                            { staticClass: "px-0" },
+                                            [
+                                              _c("b", [_vm._v("Id:")]),
+                                              _vm._v(" " + _vm._s(_vm.pet.id))
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "v-card-text",
+                                            { staticClass: "px-0" },
+                                            [
+                                              _c("b", [_vm._v("Breed:")]),
+                                              _vm._v(
+                                                " " + _vm._s(_vm.pet.breed)
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "v-card-text",
+                                            { staticClass: "px-0" },
+                                            [
+                                              _c("b", [_vm._v("Age:")]),
+                                              _vm._v(" " + _vm._s(_vm.pet.age))
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "v-card-text",
+                                            {
+                                              staticClass: "px-0",
+                                              staticStyle: { color: "white" }
+                                            },
+                                            [_vm._v(".")]
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  )
                                 ],
                                 1
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-flex",
-                            { attrs: { xs4: "" } },
-                            [
+                              ),
+                              _vm._v(" "),
                               _c(
-                                "v-card",
-                                { attrs: { dark: "", color: "primary" } },
+                                "v-flex",
+                                { attrs: { xs6: "" } },
                                 [
-                                  _c("v-card-text", { staticClass: "px-0" }, [
-                                    _vm._v("Id: " + _vm._s(_vm.pet.id))
-                                  ])
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-flex",
-                            { attrs: { xs4: "" } },
-                            [
-                              _c(
-                                "v-card",
-                                { attrs: { dark: "", color: "primary" } },
-                                [
-                                  _c("v-card-text", { staticClass: "px-0" }, [
-                                    _vm._v("Breed: " + _vm._s(_vm.pet.breed))
-                                  ])
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-flex",
-                            { attrs: { xs4: "" } },
-                            [
-                              _c(
-                                "v-card",
-                                { attrs: { dark: "", color: "primary" } },
-                                [
-                                  _c("v-card-text", { staticClass: "px-0" }, [
-                                    _vm._v("Age: " + _vm._s(_vm.pet.age))
-                                  ])
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-flex",
-                            { attrs: { xs12: "" } },
-                            [
-                              _c(
-                                "v-card",
-                                { attrs: { dark: "", color: "secondary" } },
-                                [
-                                  _c("v-card-text", { staticClass: "px-0" }, [
-                                    _vm._v("Owner Information")
-                                  ])
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-flex",
-                            { attrs: { xs4: "" } },
-                            [
-                              _c(
-                                "v-card",
-                                { attrs: { dark: "", color: "primary" } },
-                                [
-                                  _c("v-card-text", { staticClass: "px-0" }, [
-                                    _vm._v(
-                                      "Name: " + _vm._s(_vm.pet.owner.fullname)
-                                    )
-                                  ])
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-flex",
-                            { attrs: { xs4: "" } },
-                            [
-                              _c(
-                                "v-card",
-                                { attrs: { dark: "", color: "primary" } },
-                                [
-                                  _c("v-card-text", { staticClass: "px-0" }, [
-                                    _vm._v(
-                                      "Address: " +
-                                        _vm._s(_vm.pet.owner.address)
-                                    )
-                                  ])
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-flex",
-                            { attrs: { xs4: "" } },
-                            [
-                              _c(
-                                "v-card",
-                                { attrs: { dark: "", color: "primary" } },
-                                [
-                                  _c("v-card-text", { staticClass: "px-0" }, [
-                                    _vm._v(
-                                      "Phone number: " +
-                                        _vm._s(_vm.pet.owner.phoneNumber)
-                                    )
-                                  ])
+                                  _c(
+                                    "v-card",
+                                    { attrs: { color: "primary" } },
+                                    [
+                                      _c(
+                                        "v-card-text",
+                                        { staticStyle: { color: "white" } },
+                                        [_vm._v("Owner Info")]
+                                      )
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-flex",
+                                    { staticStyle: { "text-align": "left" } },
+                                    [
+                                      _c(
+                                        "v-card",
+                                        {
+                                          staticClass: "elevation-4",
+                                          staticStyle: {
+                                            "margin-top": "3%",
+                                            "padding-left": "3%"
+                                          }
+                                        },
+                                        [
+                                          _c(
+                                            "v-card-text",
+                                            { staticClass: "px-0" },
+                                            [
+                                              _c("b", [_vm._v("Name:")]),
+                                              _vm._v(
+                                                " " +
+                                                  _vm._s(_vm.pet.owner.fullname)
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "v-card-text",
+                                            { staticClass: "px-0" },
+                                            [
+                                              _c("b", [_vm._v("Id:")]),
+                                              _vm._v(
+                                                " " + _vm._s(_vm.pet.owner.id)
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "v-card-text",
+                                            { staticClass: "px-0" },
+                                            [
+                                              _c("b", [_vm._v("Address:")]),
+                                              _vm._v(
+                                                " " +
+                                                  _vm._s(_vm.pet.owner.address)
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "v-card-text",
+                                            { staticClass: "px-0" },
+                                            [
+                                              _c("b", [
+                                                _vm._v("Phone number:")
+                                              ]),
+                                              _vm._v(
+                                                " " +
+                                                  _vm._s(
+                                                    _vm.pet.owner.phoneNumber
+                                                  )
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "v-card-text",
+                                            { staticClass: "px-0" },
+                                            [
+                                              _c("b", [_vm._v("Email:")]),
+                                              _vm._v(
+                                                " " +
+                                                  _vm._s(_vm.pet.owner.email)
+                                              )
+                                            ]
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  )
                                 ],
                                 1
                               )
@@ -7354,280 +7424,313 @@ var render = function() {
                       )
                     ],
                     1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-card-actions",
-                [
-                  _c("v-spacer"),
+                  ),
                   _vm._v(" "),
                   _c(
-                    "v-btn",
-                    {
-                      staticClass: "ma-2",
-                      attrs: { tile: "", outlined: "", color: "blue" }
-                    },
+                    "v-card-actions",
                     [
+                      _c("v-spacer"),
+                      _vm._v(" "),
                       _c(
-                        "v-icon",
+                        "v-btn",
                         {
-                          attrs: { left: "" },
+                          staticClass: "ma-2",
+                          attrs: { tile: "", outlined: "", color: "blue" },
                           on: {
                             click: function($event) {
                               _vm.add = true
                             }
                           }
                         },
-                        [_vm._v("mdi-clipboard-plis-outlined")]
-                      ),
-                      _vm._v(" New Medical Record\n          ")
+                        [
+                          _c("v-icon", { attrs: { left: "" } }, [
+                            _vm._v("mdi-clipboard-plus-outline")
+                          ]),
+                          _vm._v(" "),
+                          _c("small", [_vm._v("New Medical Record")])
+                        ],
+                        1
+                      )
                     ],
                     1
                   )
                 ],
                 1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _vm.records.length > 0
-            ? _c(
-                "v-card-text",
-                [
-                  _c(
-                    "v-expansion-panels",
-                    { attrs: { multiple: "" } },
-                    _vm._l(_vm.records, function(record) {
-                      return _c(
-                        "v-expansion-panel",
-                        { key: record.id },
-                        [
-                          _c(
-                            "v-expansion-panel-header",
-                            [
-                              _c("v-icon", [_vm._v("mdi-calendar-month")]),
-                              _vm._v(" " + _vm._s(record.date)),
-                              _c("v-spacer")
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-expansion-panel-content",
-                            [
-                              _c("v-card-subtitle", [
-                                _c("b", [_vm._v("Veterinary:")]),
-                                _vm._v(
-                                  " " +
-                                    _vm._s(record.veterinary.fullname) +
-                                    "\n                  "
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("v-card-subtitle", [
-                                _vm._v("Consultation Reason")
-                              ]),
-                              _vm._v(" "),
-                              _c("v-card-text", [
-                                _vm._v(
-                                  "\n                    " +
-                                    _vm._s(record.consultationreason) +
-                                    "\n                  "
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("v-card-subtitle", [_vm._v("Diagnosis")]),
-                              _vm._v(" "),
-                              _c("v-card-text", [
-                                _vm._v(
-                                  "\n                    " +
-                                    _vm._s(record.diagnosis) +
-                                    "\n                  "
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("v-card-subtitle", [_vm._v("Treatment")]),
-                              _vm._v(" "),
-                              _c("v-card-text", [
-                                _vm._v(
-                                  "\n                    " +
-                                    _vm._s(record.treatments) +
-                                    "\n                  "
-                                )
-                              ])
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      )
-                    }),
-                    1
-                  )
-                ],
-                1
-              )
-            : _c("v-card-text", [
-                _vm._v("\n        No records available at this moment.\n      ")
-              ]),
-          _vm._v(" "),
-          _c(
-            "v-row",
-            { attrs: { justify: "center" } },
-            [
-              _c(
-                "v-dialog",
-                {
-                  attrs: { persistent: "", "max-width": "600px" },
-                  model: {
-                    value: _vm.add,
-                    callback: function($$v) {
-                      _vm.add = $$v
-                    },
-                    expression: "add"
-                  }
-                },
-                [
-                  _c(
-                    "v-card",
-                    {
-                      model: {
-                        value: _vm.valid,
-                        callback: function($$v) {
-                          _vm.valid = $$v
-                        },
-                        expression: "valid"
-                      }
-                    },
+              ),
+              _vm._v(" "),
+              _vm.records.length > 0
+                ? _c(
+                    "v-card-text",
                     [
-                      _c("v-card-title", [
-                        _c("span", { staticClass: "headline" }, [
-                          _vm._v("New Medical Record")
-                        ])
-                      ]),
-                      _vm._v(" "),
                       _c(
-                        "v-card-text",
-                        [
-                          _c(
-                            "v-form",
+                        "v-expansion-panels",
+                        { attrs: { multiple: "" } },
+                        _vm._l(_vm.records, function(record) {
+                          return _c(
+                            "v-expansion-panel",
+                            { key: record.id },
                             [
                               _c(
-                                "v-container",
+                                "v-expansion-panel-header",
+                                {
+                                  staticClass: "justify-self-start",
+                                  attrs: { "disable-icon-rotate": "" }
+                                },
                                 [
-                                  _c("v-textarea", {
-                                    attrs: {
-                                      outlined: "",
-                                      label: "Consultation Reason*",
-                                      rules: [
-                                        function(v) {
-                                          return !!v || "This field is required"
-                                        }
-                                      ]
-                                    },
-                                    model: {
-                                      value: _vm.newRecord.consultationReason,
-                                      callback: function($$v) {
-                                        _vm.$set(
-                                          _vm.newRecord,
-                                          "consultationReason",
-                                          $$v
-                                        )
-                                      },
-                                      expression: "newRecord.consultationReason"
-                                    }
-                                  }),
+                                  _c(
+                                    "div",
+                                    [
+                                      _c(
+                                        "v-icon",
+                                        { attrs: { color: "blue" } },
+                                        [_vm._v("mdi-calendar-month")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("span", [_vm._v(_vm._s(record.date))])
+                                    ],
+                                    1
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-expansion-panel-content",
+                                [
+                                  _c("v-card-subtitle", [
+                                    _c("b", [_vm._v("Veterinary:")]),
+                                    _vm._v(
+                                      " " +
+                                        _vm._s(record.veterinary.fullname) +
+                                        " v\r\n                        "
+                                    )
+                                  ]),
                                   _vm._v(" "),
-                                  _c("v-textarea", {
-                                    attrs: {
-                                      outlined: "",
-                                      label: "Diagnosis*",
-                                      rules: [
-                                        function(v) {
-                                          return !!v || "This field is required"
-                                        }
-                                      ]
-                                    },
-                                    model: {
-                                      value: _vm.newRecord.diagnosis,
-                                      callback: function($$v) {
-                                        _vm.$set(
-                                          _vm.newRecord,
-                                          "diagnosis",
-                                          $$v
-                                        )
-                                      },
-                                      expression: "newRecord.diagnosis"
-                                    }
-                                  }),
+                                  _c("v-divider"),
                                   _vm._v(" "),
-                                  _c("v-textarea", {
-                                    attrs: {
-                                      outlined: "",
-                                      label: "Treatments*",
-                                      rules: [
-                                        function(v) {
-                                          return !!v || "This field is required"
-                                        }
-                                      ]
-                                    },
-                                    model: {
-                                      value: _vm.newRecord.treatments,
-                                      callback: function($$v) {
-                                        _vm.$set(
-                                          _vm.newRecord,
-                                          "treatments",
-                                          $$v
-                                        )
-                                      },
-                                      expression: "newRecord.treatments"
-                                    }
-                                  })
+                                  _c("v-card-subtitle", [
+                                    _vm._v("Consultation Reason")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-container",
+                                    { staticStyle: { "padding-left": "5%" } },
+                                    [
+                                      _vm._v(
+                                        " \r\n                          " +
+                                          _vm._s(record.consultationreason) +
+                                          " \r\n                        "
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("v-divider"),
+                                  _vm._v(" "),
+                                  _c("v-card-subtitle", [_vm._v("Diagnosis")]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-container",
+                                    { staticStyle: { "padding-left": "5%" } },
+                                    [
+                                      _vm._v(
+                                        "\r\n                          " +
+                                          _vm._s(record.diagnosis) +
+                                          "\r\n                        "
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("v-divider"),
+                                  _vm._v(" "),
+                                  _c("v-card-subtitle", [_vm._v("Treatment")]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-container",
+                                    { staticStyle: { "padding-left": "5%" } },
+                                    [
+                                      _vm._v(
+                                        "\r\n                          " +
+                                          _vm._s(record.treatments) +
+                                          "\r\n                        "
+                                      )
+                                    ]
+                                  )
                                 ],
                                 1
                               )
                             ],
                             1
-                          ),
-                          _vm._v(" "),
-                          _c("small", [_vm._v("* indicates required field")])
-                        ],
+                          )
+                        }),
                         1
-                      ),
-                      _vm._v(" "),
+                      )
+                    ],
+                    1
+                  )
+                : _c("v-card-text", [
+                    _c("span", [_vm._v("No records available at this moment.")])
+                  ]),
+              _vm._v(" "),
+              _c(
+                "v-row",
+                { attrs: { justify: "center" } },
+                [
+                  _c(
+                    "v-dialog",
+                    {
+                      attrs: { persistent: "", "max-width": "600px" },
+                      model: {
+                        value: _vm.add,
+                        callback: function($$v) {
+                          _vm.add = $$v
+                        },
+                        expression: "add"
+                      }
+                    },
+                    [
                       _c(
-                        "v-card-actions",
+                        "v-card",
+                        {
+                          model: {
+                            value: _vm.valid,
+                            callback: function($$v) {
+                              _vm.valid = $$v
+                            },
+                            expression: "valid"
+                          }
+                        },
                         [
-                          _c("v-spacer"),
+                          _c("v-card-title", [
+                            _c("span", { staticClass: "headline" }, [
+                              _vm._v("New Medical Record")
+                            ])
+                          ]),
                           _vm._v(" "),
                           _c(
-                            "v-btn",
-                            {
-                              attrs: { color: "white", text: "" },
-                              on: {
-                                click: function($event) {
-                                  _vm.add = false
-                                }
-                              }
-                            },
-                            [_vm._v("Close")]
+                            "v-card-text",
+                            [
+                              _c(
+                                "v-form",
+                                [
+                                  _c(
+                                    "v-container",
+                                    [
+                                      _c("v-textarea", {
+                                        attrs: {
+                                          outlined: "",
+                                          label: "Consultation Reason*",
+                                          "no-resize": "",
+                                          rules: [
+                                            function(v) {
+                                              return (
+                                                !!v || "This field is required"
+                                              )
+                                            }
+                                          ]
+                                        },
+                                        model: {
+                                          value:
+                                            _vm.newRecord.consultationReason,
+                                          callback: function($$v) {
+                                            _vm.$set(
+                                              _vm.newRecord,
+                                              "consultationReason",
+                                              $$v
+                                            )
+                                          },
+                                          expression:
+                                            "newRecord.consultationReason"
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("v-textarea", {
+                                        attrs: {
+                                          outlined: "",
+                                          label: "Diagnosis*",
+                                          "no-resize": "",
+                                          rules: [
+                                            function(v) {
+                                              return (
+                                                !!v || "This field is required"
+                                              )
+                                            }
+                                          ]
+                                        },
+                                        model: {
+                                          value: _vm.newRecord.diagnosis,
+                                          callback: function($$v) {
+                                            _vm.$set(
+                                              _vm.newRecord,
+                                              "diagnosis",
+                                              $$v
+                                            )
+                                          },
+                                          expression: "newRecord.diagnosis"
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("v-textarea", {
+                                        attrs: {
+                                          outlined: "",
+                                          label: "Treatments*",
+                                          "no-resize": "",
+                                          rules: [
+                                            function(v) {
+                                              return (
+                                                !!v || "This field is required"
+                                              )
+                                            }
+                                          ]
+                                        },
+                                        model: {
+                                          value: _vm.newRecord.treatment,
+                                          callback: function($$v) {
+                                            _vm.$set(
+                                              _vm.newRecord,
+                                              "treatment",
+                                              $$v
+                                            )
+                                          },
+                                          expression: "newRecord.treatment"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c("small", [
+                                _vm._v("* indicates required field")
+                              ])
+                            ],
+                            1
                           ),
                           _vm._v(" "),
                           _c(
-                            "v-btn",
-                            {
-                              attrs: {
-                                type: "submit",
-                                color: "white",
-                                text: ""
-                              },
-                              on: { click: _vm.addRecord }
-                            },
-                            [_vm._v("Save")]
+                            "v-card-actions",
+                            [
+                              _c("v-spacer"),
+                              _vm._v(" "),
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: { text: "" },
+                                  on: { click: _vm.closeNewRecord }
+                                },
+                                [_vm._v("Close")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: { type: "submit", text: "" },
+                                  on: { click: _vm.addRecord }
+                                },
+                                [_vm._v("Save")]
+                              )
+                            ],
+                            1
                           )
                         ],
                         1
@@ -67780,8 +67883,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\juand\Documents\Programación-Web-Avanzada\VetNet\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\juand\Documents\Programación-Web-Avanzada\VetNet\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! F:\icesi\git\VetNet\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! F:\icesi\git\VetNet\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

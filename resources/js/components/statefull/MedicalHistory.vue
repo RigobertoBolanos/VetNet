@@ -1,5 +1,6 @@
 <template>
-      <v-layout justify-center>
+<v-container style="margin-top:3%">
+      <v-layout justify-center style="padding-left:8%;padding-right:8%">
         <v-flex xs14 sm12 md10>
           <v-dialog v-model="deletedialog">
             <v-card v-model="deletedialog">
@@ -22,63 +23,50 @@
                 <v-icon x-large>mdi-arrow-left-bold-hexagon-outline</v-icon>
               </v-btn>
               <v-spacer />
-              <v-toolbar-title class="toolbarTitle">Medical History #{{medicalHistoryId}}</v-toolbar-title>
+              <v-toolbar-title class="toolbarTitle">Medical History No.{{medicalHistoryId}}</v-toolbar-title>
               <v-spacer />
             </v-toolbar>
 
             <v-card-subtitle>
               <v-container fluid grid-list-md text-xs-center> 
                 <v-layout row wrap>
-                    <v-flex xs12>
-                      <v-card dark color="primary">
-                        <v-card-text class="px-0">Name: {{pet.name}}</v-card-text>
+                  <v-flex xs6 child-flex>
+                      <v-card   color="primary">
+                        <v-card-text style="color:white">Pet Info</v-card-text>
                       </v-card>
-                    </v-flex>
-                    <v-flex xs4>
-                      <v-card dark color="primary">
-                        <v-card-text class="px-0">Id: {{pet.id}}</v-card-text>
-                      </v-card>
-                    </v-flex>
-                    <v-flex xs4>
-                      <v-card dark color="primary">
-                        <v-card-text class="px-0">Breed: {{pet.breed}}</v-card-text>
-                      </v-card>
-                    </v-flex>
-                    <v-flex xs4>
-                      <v-card dark color="primary">
-                        <v-card-text class="px-0">Age: {{pet.age}}</v-card-text>
-                      </v-card>
-                    </v-flex>
+                      <v-flex style="text-align:left">
+                        <v-card  class="elevation-4" style="margin-top:3%;padding-left:3%" >
+                            <v-card-text class="px-0"><b>Name:</b> {{pet.name}}</v-card-text>
+                          <v-card-text class="px-0"><b>Id:</b> {{pet.id}}</v-card-text>
+                          <v-card-text class="px-0"><b>Breed:</b> {{pet.breed}}</v-card-text>
+                          <v-card-text class="px-0"><b>Age:</b> {{pet.age}}</v-card-text>
+                          <v-card-text class="px-0" style="color:white">.</v-card-text>
+                        </v-card>
+                      </v-flex>
+                  </v-flex>
 
-                    <v-flex xs12>
-                      <v-card dark color="secondary">
-                        <v-card-text class="px-0">Owner Information</v-card-text>
+                  <v-flex xs6>
+                      <v-card  color="primary">
+                        <v-card-text style="color:white">Owner Info</v-card-text>
                       </v-card>
-                    </v-flex>
-                    <v-flex xs4>
-                      <v-card dark color="primary">
-                        <v-card-text class="px-0">Name: {{pet.owner.fullname}}</v-card-text>
-                      </v-card>
-                    </v-flex>
-                    <v-flex xs4>
-                      <v-card dark color="primary">
-                        <v-card-text class="px-0">Address: {{pet.owner.address}}</v-card-text>
-                      </v-card>
-                    </v-flex>
-                    <v-flex xs4>
-                      <v-card dark color="primary">
-                        <v-card-text class="px-0">Phone number: {{pet.owner.phoneNumber}}</v-card-text>
-                      </v-card>
-                    </v-flex>
+                      <v-flex style="text-align:left">
+                        <v-card class="elevation-4" style="margin-top:3%;padding-left:3%" >
+                          <v-card-text class="px-0"><b>Name:</b> {{pet.owner.fullname}}</v-card-text>
+                          <v-card-text class="px-0"><b>Id:</b> {{pet.owner.id}}</v-card-text>
+                          <v-card-text class="px-0"><b>Address:</b> {{pet.owner.address}}</v-card-text>
+                          <v-card-text class="px-0"><b>Phone number:</b> {{pet.owner.phoneNumber}}</v-card-text>
+                          <v-card-text class="px-0"><b>Email:</b> {{pet.owner.email}}</v-card-text>
+                        </v-card>
+                      </v-flex>
+                  </v-flex>
                 </v-layout>
               </v-container>
-              
             </v-card-subtitle>
             <v-card-actions>
               <v-spacer></v-spacer>
           
-                <v-btn class="ma-2" tile outlined color="blue">
-                  <v-icon left @click="add = true">mdi-clipboard-plis-outlined</v-icon> New Medical Record
+                <v-btn class="ma-2" tile outlined color="blue" @click="add =true">
+                  <v-icon left >mdi-clipboard-plus-outline</v-icon> <small>New Medical Record</small>
                 </v-btn>
             </v-card-actions>
           </v-card>
@@ -87,35 +75,48 @@
               <v-expansion-panels multiple>
                 
                   <v-expansion-panel v-for="record in records" :key="record.id">
-                      <v-expansion-panel-header><v-icon>mdi-calendar-month</v-icon> {{record.date}}<v-spacer></v-spacer></v-expansion-panel-header>
+                      <v-expansion-panel-header class="justify-self-start" disable-icon-rotate>
+                        <div>
+                              <v-icon color="blue">mdi-calendar-month</v-icon>
+                                <span>{{record.date}}</span>
+                        </div>
+                      </v-expansion-panel-header>
+
                       <v-expansion-panel-content>
+                        
                         <v-card-subtitle>
-                          <b>Veterinary:</b> {{record.veterinary.fullname}}
+                          <b>Veterinary:</b> {{record.veterinary.fullname}} v
                         </v-card-subtitle>
 
+                        <v-divider></v-divider>
+
                         <v-card-subtitle>Consultation Reason</v-card-subtitle>
-                        <v-card-text>
-                          {{record.consultationreason}}
-                        </v-card-text>
-                       
+                        <v-container style="padding-left:5%"> 
+                          {{record.consultationreason}} 
+                        </v-container>
+
+                        <v-divider></v-divider>
+
                         <v-card-subtitle>Diagnosis</v-card-subtitle>
-                        <v-card-text>
+                        <v-container style="padding-left:5%">
                           {{record.diagnosis}}
-                        </v-card-text>
+                        </v-container>
+
+                        <v-divider></v-divider>
 
                         <v-card-subtitle>Treatment</v-card-subtitle>
-                        <v-card-text>
+                        <v-container style="padding-left:5%">
                           {{record.treatments}}
-                        </v-card-text>
+                        </v-container>
 
                       </v-expansion-panel-content>
                     </v-expansion-panel>
               </v-expansion-panels>
             </v-card-text>
             <v-card-text v-else>
-              No records available at this moment.
+              <span>No records available at this moment.</span> 
             </v-card-text>
-           
+            
            <v-row justify="center">
               <v-dialog v-model="add" persistent max-width="600px">
                 <v-card v-model="valid">
@@ -129,6 +130,7 @@
                           <v-textarea
                               outlined
                               label="Consultation Reason*"
+                              no-resize
                               :rules="[v => !!v || 'This field is required']"
                               v-model="newRecord.consultationReason"
                             ></v-textarea>
@@ -136,6 +138,7 @@
                             <v-textarea
                               outlined
                               label="Diagnosis*"
+                              no-resize
                               :rules="[v => !!v || 'This field is required']"
                               v-model="newRecord.diagnosis"
                             ></v-textarea>
@@ -143,8 +146,9 @@
                             <v-textarea
                               outlined
                               label="Treatments*"
+                              no-resize
                               :rules="[v => !!v || 'This field is required']"
-                              v-model="newRecord.treatments"
+                              v-model="newRecord.treatment"
                             ></v-textarea>
                           </v-container>
                     </v-form>
@@ -152,14 +156,15 @@
                   </v-card-text>
                   <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="white" text @click="add = false">Close</v-btn>
-                    <v-btn type="submit" color="white" text @click="addRecord" >Save</v-btn>
+                    <v-btn text @click="closeNewRecord">Close</v-btn>
+                    <v-btn type="submit" text @click="addRecord" >Save</v-btn>
                   </v-card-actions>
                 </v-card>
               </v-dialog>
             </v-row>
         </v-flex>
       </v-layout>
+    </v-container>
 </template>
 
 <script>
@@ -195,6 +200,12 @@ export default {
     };
   },
   methods: {
+    closeNewRecord(){
+      this.add = false
+      this.newRecord.consultationReason = null;
+      this.newRecord.diagnosis = null;
+      this.newRecord.treatment = null;
+    },
     async refresh() {
       this.records = [];
       let petData = await axios.get("pets/" + this.$route.params.petId)
@@ -241,6 +252,7 @@ export default {
             message: 'Record added to History',
             icon: 'mdi-checkbox-marked-circle-outline'
         }
+        this.closeNewRecord()
       }).catch(function(error) 
       {
         medicalHistoryStatus = 
@@ -277,10 +289,7 @@ export default {
 .v-alert{
   margin: 0px;
 }
-.v-card__actions {
-  padding: 0px;
-  background: #1976d2;
-}
+
 .content{
   margin: 1% 3% 2% 3%;
 }
