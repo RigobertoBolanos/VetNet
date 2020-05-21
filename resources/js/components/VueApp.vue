@@ -1,17 +1,21 @@
 <template>
     <v-app>
       <div>
-          <router-view></router-view>
+        <toolbar></toolbar>
+        <router-view></router-view>
       </div>
     </v-app>
 </template>
 
 <script>
+import Home from './Home'
+import Toolbar from './statefull/ToolBar'
 export default {
   name: 'App',
   computed: {
   },
   components: {
+    toolbar : Toolbar
   }
 }
 </script>
@@ -25,6 +29,5 @@ body{
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: white;
 }
 </style>

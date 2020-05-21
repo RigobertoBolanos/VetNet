@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-    <app></app>
+    <vue-app></vue-app>
 @endsection
