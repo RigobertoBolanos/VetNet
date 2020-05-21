@@ -7,12 +7,11 @@
 
 <script>
 import Services from './stateless/Services'
-
 export default {
 
   components:
   {
-    services : Services
+    services : Services,
   }
 }
 </script>
