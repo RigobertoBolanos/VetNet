@@ -97,10 +97,6 @@ class MedicalRecordAPIController extends AppBaseController
                             ->where('medicalhistory', '=', $medicalHistoryId)
                             ->get();
 
-        if (empty($medicalRecords->data)) {
-            return $this->sendError('No medical records found for this medical history');
-        }
-
         return $this->sendResponse($medicalRecords, 'Medical Record retrieved successfully');
     }
 

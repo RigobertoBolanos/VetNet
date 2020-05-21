@@ -34,7 +34,8 @@ class MedicalRecord extends Model
         'treatments',
         'consultationreason',
         'veterinary',
-        'medicalhistory'
+        'medicalhistory',
+        'date'
     ];
 
     /**
@@ -47,7 +48,6 @@ class MedicalRecord extends Model
         'diagnosis' => 'string',
         'treatments' => 'string',
         'consultationreason' => 'string',
-        'date' => 'date',
         'veterinary' => 'integer',
         'medicalhistory' => 'integer'
     ];

@@ -17,6 +17,6 @@ export default new Router({
     {path: '/users',                        component: Users},
     {path: '/pets',                         component: Pets},
     {path: '/appointments',                 component: Appointments},
-    {path: '/pets/medicalHistory/{petId}',  component: MedicalHistory},
+    {path: '/pets/medicalHistory/:petId',  component: MedicalHistory},
   ]
 });

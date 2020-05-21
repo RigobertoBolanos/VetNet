@@ -46,7 +46,7 @@
                     </v-flex>
                     <v-flex xs4>
                       <v-card dark color="primary">
-                        <v-card-text class="px-0">Age: {{pet.agre}}</v-card-text>
+                        <v-card-text class="px-0">Age: {{pet.age}}</v-card-text>
                       </v-card>
                     </v-flex>
 
@@ -62,12 +62,12 @@
                     </v-flex>
                     <v-flex xs4>
                       <v-card dark color="primary">
-                        <v-card-text class="px-0">Breed: {{pet.owner.address}}</v-card-text>
+                        <v-card-text class="px-0">Address: {{pet.owner.address}}</v-card-text>
                       </v-card>
                     </v-flex>
                     <v-flex xs4>
                       <v-card dark color="primary">
-                        <v-card-text class="px-0">Age: {{pet.owner.phoneNumber}}</v-card-text>
+                        <v-card-text class="px-0">Phone number: {{pet.owner.phoneNumber}}</v-card-text>
                       </v-card>
                     </v-flex>
                 </v-layout>
@@ -83,11 +83,11 @@
             </v-card-actions>
           </v-card>
 
-          <v-card-text v-if="records.lengt>0">
+          <v-card-text v-if="records.length>0">
               <v-expansion-panels multiple>
                 
                   <v-expansion-panel v-for="record in records" :key="record.id">
-                      <v-expansion-panel-header><v-icon>mdi-calendar-month</v-icon> {{record.date}}</v-expansion-panel-header>
+                      <v-expansion-panel-header><v-icon>mdi-calendar-month</v-icon> {{record.date}}<v-spacer></v-spacer></v-expansion-panel-header>
                       <v-expansion-panel-content>
                         <v-card-subtitle>
                           <b>Veterinary:</b> {{record.veterinary.fullname}}
@@ -185,6 +185,7 @@ export default {
       edit: false,
       add: false,
       status: null,
+      deletedialog: null,
       newRecord:{
         consultationReason:"",
         diagnosis:"",
@@ -196,7 +197,7 @@ export default {
   methods: {
     async refresh() {
       this.records = [];
-      let petData = await axios.get("pets/"+this.$route.params.id)
+      let petData = await axios.get("pets/" + this.$route.params.petId)
       let ownerData = await axios.get("users/"+petData.data.data.owner)
 
       this.pet = {
@@ -214,12 +215,13 @@ export default {
       this.medicalHistoryId = petData.data.data.medicalhistory
       let recordsData = await axios.get("medicalHistory/medicalRecords/"+this.medicalHistoryId)
       let tempRecords = []
+      console.log(recordsData)
       recordsData.data.data.forEach(record => {
-          this.tempRecords.push(record);
+          tempRecords.push(record);
       });
-
+      console.log(tempRecords)
       if(tempRecords.length>0){
-        this.records = recordsData.sort(function(a, b) {
+        this.records = tempRecords.sort(function(a, b) {
             return a.date - b.date
       });
       }

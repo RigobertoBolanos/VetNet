@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar dark src="https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg">
+  <v-toolbar dark src="https://images.pexels.com/photos/2607544/pexels-photo-2607544.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500">
     <v-toolbar-items>
       <v-icon style="margin-right:5%">mdi-forum</v-icon>
       <v-btn to="/users" text>Users</v-btn>
