@@ -2,7 +2,9 @@
     <v-app>
       <div>
         <toolbar></toolbar>
-        <router-view></router-view>
+        <div class="container">
+          <router-view></router-view>
+        </div>
       </div>
     </v-app>
 </template>

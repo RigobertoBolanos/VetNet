@@ -1957,6 +1957,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -6676,7 +6678,15 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("v-app", [
-    _c("div", [_c("toolbar"), _vm._v(" "), _c("router-view")], 1)
+    _c(
+      "div",
+      [
+        _c("toolbar"),
+        _vm._v(" "),
+        _c("div", { staticClass: "container" }, [_c("router-view")], 1)
+      ],
+      1
+    )
   ])
 }
 var staticRenderFns = []
@@ -7365,7 +7375,8 @@ var render = function() {
     {
       attrs: {
         dark: "",
-        src: "https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg"
+        src:
+          "https://images.pexels.com/photos/2607544/pexels-photo-2607544.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
       }
     },
     [
