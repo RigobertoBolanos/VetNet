@@ -1962,6 +1962,318 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/statefull/MedicalHistory.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/statefull/MedicalHistory.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _plugins_axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../plugins/axios */ "./resources/js/plugins/axios.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "MedicalHistory",
+  data: function data() {
+    return {
+      pet: {
+        name: "",
+        age: "",
+        breed: "",
+        id: "",
+        owner: {
+          fullname: "",
+          address: "",
+          phoneNumber: ""
+        }
+      },
+      medicalHistoryId: "",
+      records: [],
+      valid: true,
+      edit: false,
+      add: false,
+      status: null,
+      newRecord: {
+        consultationReason: "",
+        diagnosis: "",
+        treatment: "",
+        medicalhistory: ""
+      }
+    };
+  },
+  methods: {
+    refresh: function refresh() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var petData, ownerData, recordsData, tempRecords;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _this.records = [];
+                _context.next = 3;
+                return _plugins_axios__WEBPACK_IMPORTED_MODULE_1__["default"].get("pets/" + _this.$route.params.id);
+
+              case 3:
+                petData = _context.sent;
+                _context.next = 6;
+                return _plugins_axios__WEBPACK_IMPORTED_MODULE_1__["default"].get("users/" + petData.data.data.owner);
+
+              case 6:
+                ownerData = _context.sent;
+                _this.pet = {
+                  name: petData.data.data.name,
+                  age: petData.data.data.age,
+                  breed: petData.data.data.breed,
+                  id: petData.data.data.id,
+                  owner: {
+                    fullname: ownerData.data.data.fullname,
+                    address: ownerData.data.data.address,
+                    phoneNumber: ownerData.data.data.phonenumber
+                  }
+                };
+                _this.medicalHistoryId = petData.data.data.medicalhistory;
+                _context.next = 11;
+                return _plugins_axios__WEBPACK_IMPORTED_MODULE_1__["default"].get("medicalHistory/medicalRecords/" + _this.medicalHistoryId);
+
+              case 11:
+                recordsData = _context.sent;
+                tempRecords = [];
+                recordsData.data.data.forEach(function (record) {
+                  _this.tempRecords.push(record);
+                });
+
+                if (tempRecords.length > 0) {
+                  _this.records = recordsData.sort(function (a, b) {
+                    return a.date - b.date;
+                  });
+                }
+
+              case 15:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    showStatus: function showStatus(status) {
+      var _this2 = this;
+
+      this.deletedialog = {};
+      this.status = status;
+      setTimeout(function () {
+        _this2.status = null;
+        _this2.deletedialog = null;
+      }, 2000);
+    },
+    addRecord: function addRecord() {
+      this.newRecord.medicalhistory = this.medicalHistoryId;
+      _plugins_axios__WEBPACK_IMPORTED_MODULE_1__["default"].post('medicalrecords', this.newRecord).then(function () {
+        medicalHistoryStatus = {
+          type: 'success',
+          message: 'Record added to History',
+          icon: 'mdi-checkbox-marked-circle-outline'
+        };
+      })["catch"](function (error) {
+        medicalHistoryStatus = {
+          type: "error",
+          message: error.message,
+          icon: "mdi-skull-outline"
+        };
+      });
+      this.showStatus(medicalHistoryStatus);
+    }
+  },
+  created: function created() {
+    console.log('f');
+    this.refresh();
+  },
+  filters: {
+    formatDate: function formatDate(value) {
+      if (!value) return "";
+      return new Date(value.seconds * 1000).toLocaleDateString("es-ES");
+    }
+  },
+  components: {}
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/statefull/Service.vue?vue&type=script&lang=js&":
 /*!****************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/statefull/Service.vue?vue&type=script&lang=js& ***!
@@ -2585,6 +2897,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
@@ -2600,8 +2921,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _plugins_axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../plugins/axios */ "./resources/js/plugins/axios.js");
 /* harmony import */ var _NewPet__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NewPet */ "./resources/js/components/stateless/NewPet.vue");
 
 
@@ -2609,6 +2929,16 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2715,7 +3045,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     NewPet: _NewPet__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   methods: {
-    medicalHistory: function medicalHistory(pet) {},
+    medicalHistory: function medicalHistory(pet) {
+      return this.$router.push({
+        path: "/pets/medicalHistory/" + pet.id
+      });
+    },
     filterText: function filterText(value, search) {
       return value != null && search != null && typeof value === "string" && value.toString().indexOf(search) !== -1;
     },
@@ -2749,7 +3083,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("pets");
+                return _plugins_axios__WEBPACK_IMPORTED_MODULE_1__["default"].get("pets");
 
               case 2:
                 query = _context2.sent;
@@ -2761,7 +3095,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                         switch (_context.prev = _context.next) {
                           case 0:
                             _context.next = 2;
-                            return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("users/" + data.owner);
+                            return _plugins_axios__WEBPACK_IMPORTED_MODULE_1__["default"].get("users/" + data.owner);
 
                           case 2:
                             owner = _context.sent;
@@ -2770,7 +3104,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                               name: data.name,
                               breed: data.breed,
                               age: data.age,
-                              owner: owner.data.data
+                              owner: owner.data.data,
+                              id: data.id
                             });
 
                           case 4:
@@ -2914,6 +3249,25 @@ exports.push([module.i, "\nbody{\r\n   background-color: white;\n}\n#app {\r\n  
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/statefull/MedicalHistory.vue?vue&type=style&index=0&id=d73fbb06&scoped=true&lang=css&":
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/statefull/MedicalHistory.vue?vue&type=style&index=0&id=d73fbb06&scoped=true&lang=css& ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.toolbarTitle[data-v-d73fbb06] {\r\n  font-size: 180%;\n}\n.col[data-v-d73fbb06] {\r\n  padding: 0px;\n}\n.v-alert[data-v-d73fbb06]{\r\n  margin: 0px;\n}\n.v-card__actions[data-v-d73fbb06] {\r\n  padding: 0px;\r\n  background: #1976d2;\n}\n.content[data-v-d73fbb06]{\r\n  margin: 1% 3% 2% 3%;\n}\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/statefull/Service.vue?vue&type=style&index=0&id=1bb12c6b&scoped=true&lang=css&":
 /*!***********************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/statefull/Service.vue?vue&type=style&index=0&id=1bb12c6b&scoped=true&lang=css& ***!
@@ -2926,7 +3280,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.v-card[data-v-1bb12c6b]:not(.v-sheet--tile):not(.v-card--shaped) {\n    border-radius: 8%;\n}\n\n", ""]);
+exports.push([module.i, "\n.v-card[data-v-1bb12c6b]:not(.v-sheet--tile):not(.v-card--shaped) {\r\n    border-radius: 8%;\n}\r\n    \r\n", ""]);
 
 // exports
 
@@ -5132,6 +5486,36 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/statefull/MedicalHistory.vue?vue&type=style&index=0&id=d73fbb06&scoped=true&lang=css&":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/statefull/MedicalHistory.vue?vue&type=style&index=0&id=d73fbb06&scoped=true&lang=css& ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./MedicalHistory.vue?vue&type=style&index=0&id=d73fbb06&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/statefull/MedicalHistory.vue?vue&type=style&index=0&id=d73fbb06&scoped=true&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/statefull/Service.vue?vue&type=style&index=0&id=1bb12c6b&scoped=true&lang=css&":
 /*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/statefull/Service.vue?vue&type=style&index=0&id=1bb12c6b&scoped=true&lang=css& ***!
@@ -5914,6 +6298,587 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/statefull/MedicalHistory.vue?vue&type=template&id=d73fbb06&scoped=true&":
+/*!***************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/statefull/MedicalHistory.vue?vue&type=template&id=d73fbb06&scoped=true& ***!
+  \***************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-layout",
+    { attrs: { "justify-center": "" } },
+    [
+      _c(
+        "v-flex",
+        { attrs: { xs14: "", sm12: "", md10: "" } },
+        [
+          _c(
+            "v-dialog",
+            {
+              model: {
+                value: _vm.deletedialog,
+                callback: function($$v) {
+                  _vm.deletedialog = $$v
+                },
+                expression: "deletedialog"
+              }
+            },
+            [
+              _c(
+                "v-card",
+                {
+                  model: {
+                    value: _vm.deletedialog,
+                    callback: function($$v) {
+                      _vm.deletedialog = $$v
+                    },
+                    expression: "deletedialog"
+                  }
+                },
+                [
+                  _vm.status != null
+                    ? _c(
+                        "v-alert",
+                        {
+                          attrs: {
+                            type: _vm.status.type,
+                            outlined: "",
+                            text: "",
+                            icon: _vm.status.icon,
+                            transition: "scale-transition"
+                          }
+                        },
+                        [_vm._v(_vm._s(_vm.status.message) + "\n          ")]
+                      )
+                    : _vm._e()
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-card",
+            {
+              staticClass: "elevation-12",
+              staticStyle: { "margin-bottom": "5%" }
+            },
+            [
+              _c(
+                "v-toolbar",
+                {
+                  attrs: {
+                    color: "primary",
+                    dark: "",
+                    flat: "",
+                    "align-center": ""
+                  }
+                },
+                [
+                  _c(
+                    "v-btn",
+                    { attrs: { to: "/pets", icon: "" } },
+                    [
+                      _c("v-icon", { attrs: { "x-large": "" } }, [
+                        _vm._v("mdi-arrow-left-bold-hexagon-outline")
+                      ])
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c("v-toolbar-title", { staticClass: "toolbarTitle" }, [
+                    _vm._v("Medical History #" + _vm._s(_vm.medicalHistoryId))
+                  ]),
+                  _vm._v(" "),
+                  _c("v-spacer")
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-card-subtitle",
+                [
+                  _c(
+                    "v-container",
+                    {
+                      attrs: {
+                        fluid: "",
+                        "grid-list-md": "",
+                        "text-xs-center": ""
+                      }
+                    },
+                    [
+                      _c(
+                        "v-layout",
+                        { attrs: { row: "", wrap: "" } },
+                        [
+                          _c(
+                            "v-flex",
+                            { attrs: { xs12: "" } },
+                            [
+                              _c(
+                                "v-card",
+                                { attrs: { dark: "", color: "primary" } },
+                                [
+                                  _c("v-card-text", { staticClass: "px-0" }, [
+                                    _vm._v("Name: " + _vm._s(_vm.pet.name))
+                                  ])
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-flex",
+                            { attrs: { xs4: "" } },
+                            [
+                              _c(
+                                "v-card",
+                                { attrs: { dark: "", color: "primary" } },
+                                [
+                                  _c("v-card-text", { staticClass: "px-0" }, [
+                                    _vm._v("Id: " + _vm._s(_vm.pet.id))
+                                  ])
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-flex",
+                            { attrs: { xs4: "" } },
+                            [
+                              _c(
+                                "v-card",
+                                { attrs: { dark: "", color: "primary" } },
+                                [
+                                  _c("v-card-text", { staticClass: "px-0" }, [
+                                    _vm._v("Breed: " + _vm._s(_vm.pet.breed))
+                                  ])
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-flex",
+                            { attrs: { xs4: "" } },
+                            [
+                              _c(
+                                "v-card",
+                                { attrs: { dark: "", color: "primary" } },
+                                [
+                                  _c("v-card-text", { staticClass: "px-0" }, [
+                                    _vm._v("Age: " + _vm._s(_vm.pet.agre))
+                                  ])
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-flex",
+                            { attrs: { xs12: "" } },
+                            [
+                              _c(
+                                "v-card",
+                                { attrs: { dark: "", color: "secondary" } },
+                                [
+                                  _c("v-card-text", { staticClass: "px-0" }, [
+                                    _vm._v("Owner Information")
+                                  ])
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-flex",
+                            { attrs: { xs4: "" } },
+                            [
+                              _c(
+                                "v-card",
+                                { attrs: { dark: "", color: "primary" } },
+                                [
+                                  _c("v-card-text", { staticClass: "px-0" }, [
+                                    _vm._v(
+                                      "Name: " + _vm._s(_vm.pet.owner.fullname)
+                                    )
+                                  ])
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-flex",
+                            { attrs: { xs4: "" } },
+                            [
+                              _c(
+                                "v-card",
+                                { attrs: { dark: "", color: "primary" } },
+                                [
+                                  _c("v-card-text", { staticClass: "px-0" }, [
+                                    _vm._v(
+                                      "Breed: " + _vm._s(_vm.pet.owner.address)
+                                    )
+                                  ])
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-flex",
+                            { attrs: { xs4: "" } },
+                            [
+                              _c(
+                                "v-card",
+                                { attrs: { dark: "", color: "primary" } },
+                                [
+                                  _c("v-card-text", { staticClass: "px-0" }, [
+                                    _vm._v(
+                                      "Age: " +
+                                        _vm._s(_vm.pet.owner.phoneNumber)
+                                    )
+                                  ])
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-card-actions",
+                [
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      staticClass: "ma-2",
+                      attrs: { tile: "", outlined: "", color: "blue" }
+                    },
+                    [
+                      _c(
+                        "v-icon",
+                        {
+                          attrs: { left: "" },
+                          on: {
+                            click: function($event) {
+                              _vm.add = true
+                            }
+                          }
+                        },
+                        [_vm._v("mdi-clipboard-plis-outlined")]
+                      ),
+                      _vm._v(" New Medical Record\n          ")
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _vm.records.lengt > 0
+            ? _c(
+                "v-card-text",
+                [
+                  _c(
+                    "v-expansion-panels",
+                    { attrs: { multiple: "" } },
+                    _vm._l(_vm.records, function(record) {
+                      return _c(
+                        "v-expansion-panel",
+                        { key: record.id },
+                        [
+                          _c(
+                            "v-expansion-panel-header",
+                            [
+                              _c("v-icon", [_vm._v("mdi-calendar-month")]),
+                              _vm._v(" " + _vm._s(record.date))
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-expansion-panel-content",
+                            [
+                              _c("v-card-subtitle", [
+                                _c("b", [_vm._v("Veterinary:")]),
+                                _vm._v(
+                                  " " +
+                                    _vm._s(record.veterinary.fullname) +
+                                    "\n                  "
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("v-card-subtitle", [
+                                _vm._v("Consultation Reason")
+                              ]),
+                              _vm._v(" "),
+                              _c("v-card-text", [
+                                _vm._v(
+                                  "\n                    " +
+                                    _vm._s(record.consultationreason) +
+                                    "\n                  "
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("v-card-subtitle", [_vm._v("Diagnosis")]),
+                              _vm._v(" "),
+                              _c("v-card-text", [
+                                _vm._v(
+                                  "\n                    " +
+                                    _vm._s(record.diagnosis) +
+                                    "\n                  "
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("v-card-subtitle", [_vm._v("Treatment")]),
+                              _vm._v(" "),
+                              _c("v-card-text", [
+                                _vm._v(
+                                  "\n                    " +
+                                    _vm._s(record.treatments) +
+                                    "\n                  "
+                                )
+                              ])
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    }),
+                    1
+                  )
+                ],
+                1
+              )
+            : _c("v-card-text", [
+                _vm._v("\n        No records available at this moment.\n      ")
+              ]),
+          _vm._v(" "),
+          _c(
+            "v-row",
+            { attrs: { justify: "center" } },
+            [
+              _c(
+                "v-dialog",
+                {
+                  attrs: { persistent: "", "max-width": "600px" },
+                  model: {
+                    value: _vm.add,
+                    callback: function($$v) {
+                      _vm.add = $$v
+                    },
+                    expression: "add"
+                  }
+                },
+                [
+                  _c(
+                    "v-card",
+                    {
+                      model: {
+                        value: _vm.valid,
+                        callback: function($$v) {
+                          _vm.valid = $$v
+                        },
+                        expression: "valid"
+                      }
+                    },
+                    [
+                      _c("v-card-title", [
+                        _c("span", { staticClass: "headline" }, [
+                          _vm._v("New Medical Record")
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "v-card-text",
+                        [
+                          _c(
+                            "v-form",
+                            [
+                              _c(
+                                "v-container",
+                                [
+                                  _c("v-textarea", {
+                                    attrs: {
+                                      outlined: "",
+                                      label: "Consultation Reason*",
+                                      rules: [
+                                        function(v) {
+                                          return !!v || "This field is required"
+                                        }
+                                      ]
+                                    },
+                                    model: {
+                                      value: _vm.newRecord.consultationReason,
+                                      callback: function($$v) {
+                                        _vm.$set(
+                                          _vm.newRecord,
+                                          "consultationReason",
+                                          $$v
+                                        )
+                                      },
+                                      expression: "newRecord.consultationReason"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("v-textarea", {
+                                    attrs: {
+                                      outlined: "",
+                                      label: "Diagnosis*",
+                                      rules: [
+                                        function(v) {
+                                          return !!v || "This field is required"
+                                        }
+                                      ]
+                                    },
+                                    model: {
+                                      value: _vm.newRecord.diagnosis,
+                                      callback: function($$v) {
+                                        _vm.$set(
+                                          _vm.newRecord,
+                                          "diagnosis",
+                                          $$v
+                                        )
+                                      },
+                                      expression: "newRecord.diagnosis"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("v-textarea", {
+                                    attrs: {
+                                      outlined: "",
+                                      label: "Treatments*",
+                                      rules: [
+                                        function(v) {
+                                          return !!v || "This field is required"
+                                        }
+                                      ]
+                                    },
+                                    model: {
+                                      value: _vm.newRecord.treatments,
+                                      callback: function($$v) {
+                                        _vm.$set(
+                                          _vm.newRecord,
+                                          "treatments",
+                                          $$v
+                                        )
+                                      },
+                                      expression: "newRecord.treatments"
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c("small", [_vm._v("* indicates required field")])
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-card-actions",
+                        [
+                          _c("v-spacer"),
+                          _vm._v(" "),
+                          _c(
+                            "v-btn",
+                            {
+                              attrs: { color: "white", text: "" },
+                              on: {
+                                click: function($event) {
+                                  _vm.add = false
+                                }
+                              }
+                            },
+                            [_vm._v("Close")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-btn",
+                            {
+                              attrs: {
+                                type: "submit",
+                                color: "white",
+                                text: ""
+                              },
+                              on: { click: _vm.addRecord }
+                            },
+                            [_vm._v("Save")]
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/statefull/Service.vue?vue&type=template&id=1bb12c6b&scoped=true&":
 /*!********************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/statefull/Service.vue?vue&type=template&id=1bb12c6b&scoped=true& ***!
@@ -6204,7 +7169,6 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { attrs: { id: "app" } },
     [
       _c(
         "v-card",
@@ -6593,7 +7557,51 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("\n    NewPet\n")])
+  return _c(
+    "div",
+    [
+      _c(
+        "v-card",
+        { staticClass: "elevation-12" },
+        [
+          _c(
+            "v-toolbar",
+            {
+              attrs: {
+                color: "primary",
+                dark: "",
+                flat: "",
+                "align-center": ""
+              }
+            },
+            [
+              _c(
+                "v-btn",
+                { attrs: { icon: "" }, on: { click: _vm.closeAppointment } },
+                [
+                  _c("v-icon", { attrs: { "x-large": "" } }, [
+                    _vm._v("mdi-arrow-left-bold-hexagon-outline")
+                  ])
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("v-spacer"),
+              _vm._v(" "),
+              _c("v-toolbar-title", { staticClass: "toolbarTitle" }, [
+                _vm._v("New Appointment")
+              ]),
+              _vm._v(" "),
+              _c("v-spacer")
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -6790,20 +7798,50 @@ var render = function() {
                           "div",
                           { staticClass: "itemAction" },
                           [
-                            true
-                              ? _c(
-                                  "v-icon",
-                                  {
-                                    attrs: { color: "purple" },
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.updatePet(item)
+                            _c(
+                              "v-tooltip",
+                              {
+                                attrs: { bottom: "" },
+                                scopedSlots: _vm._u(
+                                  [
+                                    {
+                                      key: "activator",
+                                      fn: function(ref) {
+                                        var on = ref.on
+                                        return [
+                                          true
+                                            ? _c(
+                                                "v-icon",
+                                                _vm._g(
+                                                  {
+                                                    attrs: { color: "purple" },
+                                                    on: {
+                                                      click: function($event) {
+                                                        return _vm.updatePet(
+                                                          item
+                                                        )
+                                                      }
+                                                    }
+                                                  },
+                                                  on
+                                                ),
+                                                [
+                                                  _vm._v(
+                                                    "mdi-circle-edit-outline"
+                                                  )
+                                                ]
+                                              )
+                                            : undefined
+                                        ]
                                       }
                                     }
-                                  },
-                                  [_vm._v("mdi-circle-edit-outline")]
+                                  ],
+                                  null,
+                                  true
                                 )
-                              : undefined
+                              },
+                              [_vm._v(" "), _c("span", [_vm._v("Edit Pet")])]
+                            )
                           ],
                           1
                         ),
@@ -6812,20 +7850,50 @@ var render = function() {
                           "div",
                           { staticClass: "itemAction" },
                           [
-                            true
-                              ? _c(
-                                  "v-icon",
-                                  {
-                                    attrs: { color: "red" },
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.deletePet(item)
+                            _c(
+                              "v-tooltip",
+                              {
+                                attrs: { bottom: "" },
+                                scopedSlots: _vm._u(
+                                  [
+                                    {
+                                      key: "activator",
+                                      fn: function(ref) {
+                                        var on = ref.on
+                                        return [
+                                          true
+                                            ? _c(
+                                                "v-icon",
+                                                _vm._g(
+                                                  {
+                                                    attrs: { color: "red" },
+                                                    on: {
+                                                      click: function($event) {
+                                                        return _vm.deletePet(
+                                                          item
+                                                        )
+                                                      }
+                                                    }
+                                                  },
+                                                  on
+                                                ),
+                                                [
+                                                  _vm._v(
+                                                    "mdi-trash-can-outline"
+                                                  )
+                                                ]
+                                              )
+                                            : undefined
+                                        ]
                                       }
                                     }
-                                  },
-                                  [_vm._v("mdi-trash-can-outline")]
+                                  ],
+                                  null,
+                                  true
                                 )
-                              : undefined
+                              },
+                              [_vm._v(" "), _c("span", [_vm._v("Delete Pet")])]
+                            )
                           ],
                           1
                         )
@@ -6869,7 +7937,7 @@ var render = function() {
     "div",
     { staticClass: "services" },
     [
-      _c("h1", [_vm._v("\r\n    Servicios de Calidad\r\n  ")]),
+      _c("h1", [_vm._v("\n    Servicios de Calidad\n  ")]),
       _vm._v(" "),
       _c(
         "v-container",
@@ -63802,9 +64870,11 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
 var map = {
 	"./App.vue": "./resources/js/components/App.vue",
 	"./Home.vue": "./resources/js/components/Home.vue",
+	"./statefull/MedicalHistory.vue": "./resources/js/components/statefull/MedicalHistory.vue",
 	"./statefull/Service.vue": "./resources/js/components/statefull/Service.vue",
 	"./stateless/Appointments.vue": "./resources/js/components/stateless/Appointments.vue",
 	"./stateless/NewAppointment.vue": "./resources/js/components/stateless/NewAppointment.vue",
+	"./stateless/NewMedicalRecord.vue": "./resources/js/components/stateless/NewMedicalRecord.vue",
 	"./stateless/NewPet.vue": "./resources/js/components/stateless/NewPet.vue",
 	"./stateless/Pets.vue": "./resources/js/components/stateless/Pets.vue",
 	"./stateless/Services.vue": "./resources/js/components/stateless/Services.vue",
@@ -63989,6 +65059,93 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/statefull/MedicalHistory.vue":
+/*!**************************************************************!*\
+  !*** ./resources/js/components/statefull/MedicalHistory.vue ***!
+  \**************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _MedicalHistory_vue_vue_type_template_id_d73fbb06_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MedicalHistory.vue?vue&type=template&id=d73fbb06&scoped=true& */ "./resources/js/components/statefull/MedicalHistory.vue?vue&type=template&id=d73fbb06&scoped=true&");
+/* harmony import */ var _MedicalHistory_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MedicalHistory.vue?vue&type=script&lang=js& */ "./resources/js/components/statefull/MedicalHistory.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _MedicalHistory_vue_vue_type_style_index_0_id_d73fbb06_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./MedicalHistory.vue?vue&type=style&index=0&id=d73fbb06&scoped=true&lang=css& */ "./resources/js/components/statefull/MedicalHistory.vue?vue&type=style&index=0&id=d73fbb06&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _MedicalHistory_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _MedicalHistory_vue_vue_type_template_id_d73fbb06_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _MedicalHistory_vue_vue_type_template_id_d73fbb06_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "d73fbb06",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/statefull/MedicalHistory.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/statefull/MedicalHistory.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/components/statefull/MedicalHistory.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MedicalHistory_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./MedicalHistory.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/statefull/MedicalHistory.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MedicalHistory_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/statefull/MedicalHistory.vue?vue&type=style&index=0&id=d73fbb06&scoped=true&lang=css&":
+/*!***********************************************************************************************************************!*\
+  !*** ./resources/js/components/statefull/MedicalHistory.vue?vue&type=style&index=0&id=d73fbb06&scoped=true&lang=css& ***!
+  \***********************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_MedicalHistory_vue_vue_type_style_index_0_id_d73fbb06_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./MedicalHistory.vue?vue&type=style&index=0&id=d73fbb06&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/statefull/MedicalHistory.vue?vue&type=style&index=0&id=d73fbb06&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_MedicalHistory_vue_vue_type_style_index_0_id_d73fbb06_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_MedicalHistory_vue_vue_type_style_index_0_id_d73fbb06_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_MedicalHistory_vue_vue_type_style_index_0_id_d73fbb06_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_MedicalHistory_vue_vue_type_style_index_0_id_d73fbb06_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_MedicalHistory_vue_vue_type_style_index_0_id_d73fbb06_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/components/statefull/MedicalHistory.vue?vue&type=template&id=d73fbb06&scoped=true&":
+/*!*********************************************************************************************************!*\
+  !*** ./resources/js/components/statefull/MedicalHistory.vue?vue&type=template&id=d73fbb06&scoped=true& ***!
+  \*********************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MedicalHistory_vue_vue_type_template_id_d73fbb06_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./MedicalHistory.vue?vue&type=template&id=d73fbb06&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/statefull/MedicalHistory.vue?vue&type=template&id=d73fbb06&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MedicalHistory_vue_vue_type_template_id_d73fbb06_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MedicalHistory_vue_vue_type_template_id_d73fbb06_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/statefull/Service.vue":
 /*!*******************************************************!*\
   !*** ./resources/js/components/statefull/Service.vue ***!
@@ -64167,15 +65324,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!**************************************************************!*\
   !*** ./resources/js/components/stateless/NewAppointment.vue ***!
   \**************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _NewAppointment_vue_vue_type_template_id_33da3e4f_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NewAppointment.vue?vue&type=template&id=33da3e4f&scoped=true& */ "./resources/js/components/stateless/NewAppointment.vue?vue&type=template&id=33da3e4f&scoped=true&");
 /* harmony import */ var _NewAppointment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NewAppointment.vue?vue&type=script&lang=js& */ "./resources/js/components/stateless/NewAppointment.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _NewAppointment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _NewAppointment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _NewAppointment_vue_vue_type_style_index_0_id_33da3e4f_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NewAppointment.vue?vue&type=style&index=0&id=33da3e4f&scoped=true&lang=css& */ "./resources/js/components/stateless/NewAppointment.vue?vue&type=style&index=0&id=33da3e4f&scoped=true&lang=css&");
+/* empty/unused harmony star reexport *//* harmony import */ var _NewAppointment_vue_vue_type_style_index_0_id_33da3e4f_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NewAppointment.vue?vue&type=style&index=0&id=33da3e4f&scoped=true&lang=css& */ "./resources/js/components/stateless/NewAppointment.vue?vue&type=style&index=0&id=33da3e4f&scoped=true&lang=css&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -64207,7 +65363,7 @@ component.options.__file = "resources/js/components/stateless/NewAppointment.vue
 /*!***************************************************************************************!*\
   !*** ./resources/js/components/stateless/NewAppointment.vue?vue&type=script&lang=js& ***!
   \***************************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -64248,6 +65404,38 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NewAppointment_vue_vue_type_template_id_33da3e4f_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/components/stateless/NewMedicalRecord.vue":
+/*!****************************************************************!*\
+  !*** ./resources/js/components/stateless/NewMedicalRecord.vue ***!
+  \****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+var render, staticRenderFns
+var script = {}
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__["default"])(
+  script,
+  render,
+  staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+component.options.__file = "resources/js/components/stateless/NewMedicalRecord.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
@@ -64628,6 +65816,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_stateless_Pets__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/stateless/Pets */ "./resources/js/components/stateless/Pets.vue");
 /* harmony import */ var _components_stateless_Appointments__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/stateless/Appointments */ "./resources/js/components/stateless/Appointments.vue");
 /* harmony import */ var _components_Home__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/Home */ "./resources/js/components/Home.vue");
+/* harmony import */ var _components_statefull_MedicalHistory__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/statefull/MedicalHistory */ "./resources/js/components/statefull/MedicalHistory.vue");
+
 
 
 
@@ -64649,6 +65839,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
   }, {
     path: '/appointments',
     component: _components_stateless_Appointments__WEBPACK_IMPORTED_MODULE_4__["default"]
+  }, {
+    path: '/pets/medicalHistory/{petId}',
+    component: _components_statefull_MedicalHistory__WEBPACK_IMPORTED_MODULE_6__["default"]
   }]
 }));
 
@@ -64672,8 +65865,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! F:\icesi\git\VetNet\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! F:\icesi\git\VetNet\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\juand\Documents\Programación-Web-Avanzada\VetNet\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\juand\Documents\Programación-Web-Avanzada\VetNet\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

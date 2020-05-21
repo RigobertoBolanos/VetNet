@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div>
     <v-card class="elevation-12">
       <v-toolbar color="primary" dark flat align-center>
         <v-btn @click="closeAppointmentForm" icon>

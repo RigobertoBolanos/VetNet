@@ -35,8 +35,8 @@ export default {
 </script>
 
 <style scoped>
-    .v-card:not(.v-sheet--tile):not(.v-card--shaped) {
-        border-radius: 8%;
-    }
+.v-card:not(.v-sheet--tile):not(.v-card--shaped) {
+    border-radius: 8%;
+}
     
 </style>    

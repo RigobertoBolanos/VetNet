@@ -68,7 +68,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from '../../plugins/axios'
 import NewPet from './NewPet'
 
 export default {
@@ -119,7 +119,7 @@ export default {
     },
     methods: {
       medicalHistory(pet){
-
+        return this.$router.push({ path: "/pets/medicalHistory/" + pet.id });
       },
       filterText(value, search) 
       {
@@ -162,7 +162,8 @@ export default {
             name: data.name,
             breed: data.breed,
             age: data.age,
-            owner: owner.data.data
+            owner: owner.data.data,
+            id: data.id
           })
         });
 

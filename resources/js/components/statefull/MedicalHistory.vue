@@ -1,6 +1,4 @@
 <template>
-  <div id="App">
-    <v-app class="LoginDiv">
       <v-layout justify-center>
         <v-flex xs14 sm12 md10>
           <v-dialog v-model="deletedialog">
@@ -18,6 +16,7 @@
           </v-dialog>
 
           <v-card class="elevation-12" style="margin-bottom: 5%">
+
             <v-toolbar color="primary" dark flat align-center>
               <v-btn to="/pets" icon>
                 <v-icon x-large>mdi-arrow-left-bold-hexagon-outline</v-icon>
@@ -26,10 +25,6 @@
               <v-toolbar-title class="toolbarTitle">Medical History #{{medicalHistoryId}}</v-toolbar-title>
               <v-spacer />
             </v-toolbar>
-
-            <v-dialog v-model="add" :persistent="true">
-              <NewMedicalRecord v-if="add" :appointment="appointmentToUpdate" @notifyNewAppointment="appointmentAdded" @notifyNewAppointmentStatus="showNewAppointmentStatus" @closeAppointmentForm="closeAppointmentForm"></NewMedicalRecord>
-            </v-dialog>
 
             <v-card-subtitle>
               <v-container fluid grid-list-md text-xs-center> 
@@ -83,7 +78,7 @@
               <v-spacer></v-spacer>
           
                 <v-btn class="ma-2" tile outlined color="blue">
-                  <v-icon left @click="addRecord = true">mdi-clipboard-plis-outlined</v-icon> New Medical Record
+                  <v-icon left @click="add = true">mdi-clipboard-plis-outlined</v-icon> New Medical Record
                 </v-btn>
             </v-card-actions>
           </v-card>
@@ -117,12 +112,12 @@
                     </v-expansion-panel>
               </v-expansion-panels>
             </v-card-text>
-            <v-card-text>
+            <v-card-text v-else>
               No records available at this moment.
             </v-card-text>
            
            <v-row justify="center">
-              <v-dialog v-model="addRecord" persistent max-width="600px">
+              <v-dialog v-model="add" persistent max-width="600px">
                 <v-card v-model="valid">
                   <v-card-title>
                     <span class="headline">New Medical Record</span>
@@ -157,22 +152,20 @@
                   </v-card-text>
                   <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="white" text @click="addRecord = false">Close</v-btn>
-                    <v-btn type="submit" color="white" text @click="newRecord" >Save</v-btn>
+                    <v-btn color="white" text @click="add = false">Close</v-btn>
+                    <v-btn type="submit" color="white" text @click="addRecord" >Save</v-btn>
                   </v-card-actions>
                 </v-card>
               </v-dialog>
             </v-row>
         </v-flex>
       </v-layout>
-    </v-app>
-  </div>
 </template>
 
 <script>
-import axios from 'axios';
+import axios from '../../plugins/axios';
 export default {
-  name: "Medical History",
+  name: "MedicalHistory",
   data() {
     return {
       pet: {
@@ -190,18 +183,17 @@ export default {
       records: [],
       valid:true,
       edit: false,
-      addRecord: false,
-      deletedialog: null,
+      add: false,
       status: null,
       newRecord:{
         consultationReason:"",
         diagnosis:"",
-        treatment:""
+        treatment:"",
+        medicalhistory: ""
       }
     };
   },
   methods: {
-   
     async refresh() {
       this.records = [];
       let petData = await axios.get("pets/"+this.$route.params.id)
@@ -220,9 +212,9 @@ export default {
       }
 
       this.medicalHistoryId = petData.data.data.medicalhistory
-      let recordsData = await axios.get("medicalHistory/medicalREcords/"+this.medicalHistoryId)
+      let recordsData = await axios.get("medicalHistory/medicalRecords/"+this.medicalHistoryId)
       let tempRecords = []
-      recordsData.data.data.array.forEach(record => {
+      recordsData.data.data.forEach(record => {
           this.tempRecords.push(record);
       });
 
@@ -238,37 +230,31 @@ export default {
       this.status = status
       setTimeout(() => {this.status = null;this.deletedialog = null}, 2000);
     },
-    newRecord() 
+    addRecord() 
     {
-      let editStatus = null
-      this.db.collection("entries").doc(this.forum.id).set(
+      this.newRecord.medicalhistory = this.medicalHistoryId
+      axios.post('medicalrecords', this.newRecord).then(() =>
       {
-        postdata: this.forum.postdata
-      },
-      { 
-        merge: true 
-      }).then(() =>
-      {
-        editStatus  = 
+        medicalHistoryStatus  = 
         {
             type: 'success',
-            message: 'Your forum was updated',
+            message: 'Record added to History',
             icon: 'mdi-checkbox-marked-circle-outline'
         }
       }).catch(function(error) 
       {
-        editStatus = 
+        medicalHistoryStatus = 
         {
           type: "error",
           message: error.message,
           icon: "mdi-skull-outline"
         }
       });
-      this.edit = false
-      this.showStatus(editStatus)
+      this.showStatus(medicalHistoryStatus)
     }
   },
-  mounted: function() {
+  created() {
+    console.log('f')
     this.refresh();
   },
   filters: {

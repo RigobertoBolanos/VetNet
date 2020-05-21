@@ -1,15 +1,15 @@
 <template>
-<div class="services">
-  <h1>
-    Servicios de Calidad
-  </h1>
-  <v-container grid-list-md fluid>
-    <v-row>
-        <v-col xs="12" sm="4" md="3" v-for="service in services" :key="service.id">
-          <card-service :service = "service"></card-service>
-        </v-col>
-    </v-row>
-  </v-container>
+  <div class="services">
+    <h1>
+      Servicios de Calidad
+    </h1>
+    <v-container grid-list-md fluid>
+      <v-row>
+          <v-col xs="12" sm="4" md="3" v-for="service in services" :key="service.id">
+            <card-service :service = "service"></card-service>
+          </v-col>
+      </v-row>
+    </v-container>
   </div>
 </template>
 
