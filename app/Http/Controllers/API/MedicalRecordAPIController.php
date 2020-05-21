@@ -9,6 +9,7 @@ use App\Repositories\MedicalRecordRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
 use Response;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class MedicalRecordController
@@ -78,6 +79,29 @@ class MedicalRecordAPIController extends AppBaseController
         }
 
         return $this->sendResponse($medicalRecord->toArray(), 'Medical Record retrieved successfully');
+    }
+
+    /**
+     * Display the specified MedicalRecord.
+     * GET|HEAD /medicalHistory/medicalRecords/{medicalHistoryId}
+     *
+     * @param int $medicalHistoryId
+     *
+     * @return Response
+     */
+    public function findByMedicalHistory($medicalHistoryId)
+    {
+        /** @var MedicalRecord $medicalRecord */
+        $medicalRecords = DB::table('medical_records')
+                            ->select(DB::raw('*'))
+                            ->where('medicalhistory', '=', $medicalHistoryId)
+                            ->get();
+
+        if (empty($medicalRecords->data)) {
+            return $this->sendError('No medical records found for this medical history');
+        }
+
+        return $this->sendResponse($medicalRecords, 'Medical Record retrieved successfully');
     }
 
     /**

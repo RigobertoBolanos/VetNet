@@ -13,7 +13,7 @@
         <v-spacer></v-spacer>
 
         <v-dialog v-model="add" :persistent="true">
-          <NewAppointment v-if="add" :appointment="appointmentToUpdate" @notifyNewAppointment="appointmentAdded" @notifyNewAppointmentStatus="showNewAppointmentStatus" @closeAppointmentForm="closeAppointmentForm"></NewAppointment>
+          <NewAppointment v-if="add" :appointment="appointmentToUpdate" @notifyNewAppointment="refresh" @notifyNewAppointmentStatus="showNewAppointmentStatus" @closeAppointmentForm="closeAppointmentForm"></NewAppointment>
         </v-dialog>
 
         <v-btn v-if="true" small fab color="blue" @click="add = !add">
@@ -111,15 +111,34 @@ export default {
           value.toString().indexOf(search) !== -1
         );
       },
+      deleteAppointment(appointment) 
+      {
+        axios.delete('appointments/' + appointment.id
+        ).then((response) => 
+        {
+          this.newAppointmentStatus = {
+          type: 'success',
+          message: response.data.message,
+          icon: 'mdi-checkbox-marked-circle-outline'
+          }
+          this.showNewAppointmentStatus(this.newAppointmentStatus)
+          let indexToDelete = this.appointments.indexOf(i => i.id == appointment.id)
+          this.appointments.splice(indexToDelete,1)
+        })      
+        .catch((error) => 
+        {
+          this.newAppointmentStatus = {
+            type: 'error',
+            message: error.message,
+            icon: 'mdi-skull-outline'
+          }
+          this.showNewAppointmentStatus(this.newAppointmentStatus)
+        })
+      },
       updateAppointment(item)
       {
         this.appointmentToUpdate = item
         this.add = true
-      },
-      appointmentAdded() 
-      {
-        this.add = false;
-        this.refresh();
       },
       closeAppointmentForm() 
       {
@@ -133,6 +152,8 @@ export default {
       },
       async refresh()
       {
+        this.appointments = []
+        this.add = false;
         let query = await axios.get("appointments")
         console.log(query)
         query.data.data.forEach( async data =>
@@ -145,7 +166,8 @@ export default {
             date: data.date,
             pet: pet.data.data,
             assigned_to: assigned_to.data.data,
-            service: service.data.data
+            service: service.data.data,
+            id: data.id
           })
         });
 

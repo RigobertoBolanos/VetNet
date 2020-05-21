@@ -9,6 +9,7 @@ use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
 use Response;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class UserController
@@ -41,6 +42,23 @@ class UserAPIController extends AppBaseController
         );
 
         return $this->sendResponse($users->toArray(), 'Users retrieved successfully');
+    }
+
+    /**
+     * Display a listing of the Employees (Users with contractnumbre).
+     * GET|HEAD /employees
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function employees(Request $request)
+    {
+        $users = DB::table('users')
+                    ->select(DB::raw('*'))
+                    ->where('contractnumber', '<>', null)
+                    ->get();
+
+        return $this->sendResponse($users, 'Employees retrieved successfully');
     }
 
     /**

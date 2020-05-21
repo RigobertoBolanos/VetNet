@@ -29,3 +29,7 @@ Route::resource('medical_records', 'MedicalRecordAPIController');
 Route::resource('medical_histories', 'MedicalHistoryAPIController');
 
 Route::resource('appointments', 'AppointmentAPIController');
+
+Route::get('employees', 'UserAPIController@employees');
+
+Route::get('medicalHistory/medicalRecords/{medicalHistoryId}', 'MedicalRecordAPIController@findByMedicalHistory');

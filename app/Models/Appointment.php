@@ -12,10 +12,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @property \App\Models\Pet $pet
  * @property \App\Models\Users $veterinary
- * @property \Illuminate\Database\Eloquent\Collection $services
+ * @property \App\Models\Service $service
  * @property integer $pet
  * @property integer $veterinary
- * @property integer $services
+ * @property integer $service
  */
 class Appointment extends Model
 {
@@ -31,7 +31,7 @@ class Appointment extends Model
     public $fillable = [
         'pet',
         'assigned_to',
-        'services',
+        'service',
         'date'
     ];
 
@@ -44,7 +44,7 @@ class Appointment extends Model
         'id' => 'integer',
         'pet' => 'integer',
         'assigned_to' => 'integer',
-        'services' => 'integer'
+        'service' => 'integer'
     ];
 
     /**

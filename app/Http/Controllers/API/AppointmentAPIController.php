@@ -55,9 +55,9 @@ class AppointmentAPIController extends AppBaseController
     public function store(CreateAppointmentAPIRequest $request)
     {
         $input = $request->all();
-        
-        $appointment = $this->appointmentRepository->create($input);
 
+        $appointment = $this->appointmentRepository->create($input);
+        
         return $this->sendResponse($appointment->toArray(), 'Appointment saved successfully');
     }
 

@@ -2127,28 +2127,51 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     filterText: function filterText(value, search) {
       return value != null && search != null && typeof value === "string" && value.toString().indexOf(search) !== -1;
     },
+    deleteAppointment: function deleteAppointment(appointment) {
+      var _this = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"]('appointments/' + appointment.id).then(function (response) {
+        _this.newAppointmentStatus = {
+          type: 'success',
+          message: response.data.message,
+          icon: 'mdi-checkbox-marked-circle-outline'
+        };
+
+        _this.showNewAppointmentStatus(_this.newAppointmentStatus);
+
+        var indexToDelete = _this.appointments.indexOf(function (i) {
+          return i.id == appointment.id;
+        });
+
+        _this.appointments.splice(indexToDelete, 1);
+      })["catch"](function (error) {
+        _this.newAppointmentStatus = {
+          type: 'error',
+          message: error.message,
+          icon: 'mdi-skull-outline'
+        };
+
+        _this.showNewAppointmentStatus(_this.newAppointmentStatus);
+      });
+    },
     updateAppointment: function updateAppointment(item) {
       this.appointmentToUpdate = item;
       this.add = true;
-    },
-    appointmentAdded: function appointmentAdded() {
-      this.add = false;
-      this.refresh();
     },
     closeAppointmentForm: function closeAppointmentForm() {
       this.add = false;
       this.appointmentToUpdate = null;
     },
     showNewAppointmentStatus: function showNewAppointmentStatus(status) {
-      var _this = this;
+      var _this2 = this;
 
       this.newAppointmentStatus = status;
       setTimeout(function () {
-        return _this.newAppointmentStatus = null;
+        return _this2.newAppointmentStatus = null;
       }, 3000);
     },
     refresh: function refresh() {
-      var _this2 = this;
+      var _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
         var query;
@@ -2156,10 +2179,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _context2.next = 2;
+                _this3.appointments = [];
+                _this3.add = false;
+                _context2.next = 4;
                 return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("appointments");
 
-              case 2:
+              case 4:
                 query = _context2.sent;
                 console.log(query);
                 query.data.data.forEach( /*#__PURE__*/function () {
@@ -2185,11 +2210,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                           case 8:
                             service = _context.sent;
 
-                            _this2.appointments.push({
+                            _this3.appointments.push({
                               date: data.date,
                               pet: pet.data.data,
                               assigned_to: assigned_to.data.data,
-                              service: service.data.data
+                              service: service.data.data,
+                              id: data.id
                             });
 
                           case 10:
@@ -2205,7 +2231,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   };
                 }());
 
-              case 5:
+              case 7:
               case "end":
                 return _context2.stop();
             }
@@ -2236,9 +2262,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _plugins_axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../plugins/axios */ "./resources/js/plugins/axios.js");
-/* harmony import */ var qs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! qs */ "./node_modules/qs/lib/index.js");
-/* harmony import */ var qs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(qs__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _plugins_axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../plugins/axios */ "./resources/js/plugins/axios.js");
+/* harmony import */ var qs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! qs */ "./node_modules/qs/lib/index.js");
+/* harmony import */ var qs__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(qs__WEBPACK_IMPORTED_MODULE_2__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2349,6 +2388,7 @@ __webpack_require__.r(__webpack_exports__);
   props: ["appointment"],
   data: function data() {
     return {
+      newAppointmentStatus: null,
       date: new Date().toISOString().substr(0, 10),
       modal: false,
       valid: true,
@@ -2364,95 +2404,167 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    closeAppointment: function closeAppointment() {
+    closeAppointmentForm: function closeAppointmentForm() {
       this.$emit("closeAppointmentForm");
     },
     resetFields: function resetFields() {
       this.idUser = "", this.pet = null, this.assigned_to = null, this.service = null, this.employees = [], this.services = [], this.pets = [], this.hour = null;
     },
     addAppointment: function addAppointment() {
-      //Save Appointment this.$emit("notifyNewForum")
+      var _this = this;
 
-      /*axios.post("api/appointments", {
+      console.log(this.service.id);
+      _plugins_axios__WEBPACK_IMPORTED_MODULE_1__["default"].post('appointments', {
+        date: this.date + " " + this.hour,
+        pet: this.pet.id,
+        assigned_to: this.assigned_to.id,
+        service: this.service.id
+      }).then(function (response) {
+        _this.newAppointmentStatus = {
+          type: 'success',
+          message: response.data.message,
+          icon: 'mdi-checkbox-marked-circle-outline'
+        };
+
+        _this.$emit("notifyNewAppointmentStatus", _this.newAppointmentStatus);
+
+        _this.closeAppointmentForm();
+
+        _this.$emit('notifyNewAppointment');
+      })["catch"](function (error) {
+        _this.newAppointmentStatus = {
+          type: 'error',
+          message: error.message,
+          icon: 'mdi-skull-outline'
+        };
+
+        _this.$emit("notifyNewAppointmentStatus", _this.newAppointmentStatus);
+
+        _this.closeAppointmentForm();
+      });
+    },
+    updateAppointment: function updateAppointment() {
+      var _this2 = this;
+
+      console.log(this.appointment);
+      _plugins_axios__WEBPACK_IMPORTED_MODULE_1__["default"].put('appointments/' + this.appointment.id, {
         date: this.date + " " + this.hour,
         pet: this.pet.id,
         assigned_to: this.assigned_to.id,
         service: this.service.id,
-      })
-      .then((result) => {
-        console.log(result)
-        this.$emit("notifyNewAppointment")
-      }).catch((err) => {
-        console.log(err)
-      });
-      */
-
-      /*
-       const params = new URLSearchParams()
-       params.append('date', this.date + " " + this.hour)
-       params.append('pet', this.pet.id)
-       params.append('assigned_to', this.assigned_to.id)
-       params.append('service', this.service.id)
-      
-       const requestBody = {
-         date: this.date + " " + this.hour,
-         pet: this.pet.id,
-         assigned_to: this.assigned_to.id,
-         service: this.service.id,
-       } 
-       
-       const config = 
-       {
-         headers: 
-         {     
-           'Content-Type': 'application/x-www-form-urlencoded',
-         } 
-       }  
-       axios.post('api/appointments', qs.stringify(requestBody), config) 
-       .then((result) => console.log(result)).catch((err) => console.log(err))
-       */
-      Object(_plugins_axios__WEBPACK_IMPORTED_MODULE_0__["default"])({
-        method: 'post',
-        url: 'appointments',
-        data: qs__WEBPACK_IMPORTED_MODULE_1___default.a.stringify({
-          date: this.date + " " + this.hour,
-          pet: this.pet.id,
-          assigned_to: this.assigned_to.id,
-          service: this.service.id
-        })
+        id: this.appointment.id
       }).then(function (response) {
-        return console.log(response);
+        _this2.newAppointmentStatus = {
+          type: 'success',
+          message: response.data.message,
+          icon: 'mdi-checkbox-marked-circle-outline'
+        };
+
+        _this2.$emit("notifyNewAppointmentStatus", _this2.newAppointmentStatus);
+
+        _this2.closeAppointmentForm();
+
+        _this2.$emit('notifyNewAppointment');
       })["catch"](function (error) {
-        return console.log(error);
+        _this2.newAppointmentStatus = {
+          type: 'error',
+          message: error.message,
+          icon: 'mdi-skull-outline'
+        };
+
+        _this2.$emit("notifyNewAppointmentStatus", _this2.newAppointmentStatus);
+
+        _this2.closeAppointmentForm();
       });
-      /*
-      this.newForumStatus  = 
-                  {
-                    type: 'success',
-                    message: 'The forum was created successfully',
-                    icon: 'mdi-checkbox-marked-circle-outline'
+    },
+    updatePets: function updatePets() {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var query, userPets;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return _plugins_axios__WEBPACK_IMPORTED_MODULE_1__["default"].get("pets");
+
+              case 2:
+                query = _context.sent;
+                userPets = [];
+                query.data.data.forEach(function (pet) {
+                  if (pet.owner == _this3.idUser) {
+                    userPets.push(pet);
                   }
-      */
-      //  this.$emit("notifyNewAppointmentStatus", this.newAppointmentStatus)
+                });
+                _this3.pets = userPets;
+
+              case 6:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    updateOptions: function updateOptions() {
+      var _this4 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var query;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return _plugins_axios__WEBPACK_IMPORTED_MODULE_1__["default"].get("services")["catch"](function (error) {
+                  return console.log(error);
+                });
+
+              case 2:
+                query = _context2.sent;
+                _this4.services = query.data.data;
+                _context2.next = 6;
+                return _plugins_axios__WEBPACK_IMPORTED_MODULE_1__["default"].get("employees")["catch"](function (error) {
+                  return console.log(error);
+                });
+
+              case 6:
+                query = _context2.sent;
+                _this4.employees = query.data.data;
+
+              case 8:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
     }
   },
   created: function created() {
+    var _this5 = this;
+
     if (this.appointment) {
-      this.pets.push(this.appointment.pet);
-      this.pet = this.appointment.pet;
       this.services.push(this.appointment.service);
       this.service = this.appointment.service;
       this.employees.push(this.appointment.assigned_to);
       this.assigned_to = this.appointment.assigned_to;
       this.idUser = this.appointment.pet.owner;
       var dateTimeData = this.appointment.date.split(' ');
-      var dateData = dateTimeData[0].split('-');
-      var date = new Date(dateData[0], dateData[1], dateData[2]);
+      this.date = dateTimeData[0];
       var timeData = dateTimeData[1].split(':', 2);
       var timeString = timeData[0] + ":" + timeData[1];
-      this.hours.push(timeString);
       this.hour = timeString;
+      this.updatePets();
+      this.pets.forEach(function (pet) {
+        if (pet.id == _this5.appointment.pet.id) {
+          _this5.pet = pet;
+        }
+      });
     }
+
+    this.updateOptions();
   }
 });
 
@@ -5940,7 +6052,7 @@ var render = function() {
                 ? _c("NewAppointment", {
                     attrs: { appointment: _vm.appointmentToUpdate },
                     on: {
-                      notifyNewAppointment: _vm.appointmentAdded,
+                      notifyNewAppointment: _vm.refresh,
                       notifyNewAppointmentStatus: _vm.showNewAppointmentStatus,
                       closeAppointmentForm: _vm.closeAppointmentForm
                     }
@@ -6111,7 +6223,10 @@ var render = function() {
             [
               _c(
                 "v-btn",
-                { attrs: { icon: "" }, on: { click: _vm.closeAppointment } },
+                {
+                  attrs: { icon: "" },
+                  on: { click: _vm.closeAppointmentForm }
+                },
                 [
                   _c("v-icon", { attrs: { "x-large": "" } }, [
                     _vm._v("mdi-arrow-left-bold-hexagon-outline")
@@ -6154,13 +6269,19 @@ var render = function() {
                         attrs: {
                           label: "User Id",
                           type: "text",
+                          disabled: _vm.appointment != null,
                           "prepend-icon": "mdi-account-circle",
                           rules: [
                             function(v) {
-                              return !!v || "Id is required"
+                              return v !== "" || "Id is required"
                             }
                           ],
                           required: ""
+                        },
+                        on: {
+                          change: function($event) {
+                            return _vm.updatePets()
+                          }
                         },
                         model: {
                           value: _vm.idUser,
@@ -6189,7 +6310,8 @@ var render = function() {
                           ],
                           label: "Select pet",
                           "prepend-icon": "mdi-paw",
-                          required: ""
+                          required: "",
+                          "return-object": ""
                         },
                         model: {
                           value: _vm.pet,
@@ -6221,7 +6343,8 @@ var render = function() {
                             }
                           ],
                           label: "Assign to Employee",
-                          required: ""
+                          required: "",
+                          "return-object": ""
                         },
                         model: {
                           value: _vm.assigned_to,
@@ -6242,6 +6365,7 @@ var render = function() {
                       _c("v-select", {
                         attrs: {
                           items: _vm.services,
+                          "item-text": "name",
                           "prepend-icon": "mdi-format-list-checkbox",
                           rules: [
                             function(v) {
@@ -6249,8 +6373,8 @@ var render = function() {
                             }
                           ],
                           label: "Select a service",
-                          "item-text": "name",
-                          required: ""
+                          required: "",
+                          "return-object": ""
                         },
                         model: {
                           value: _vm.service,
@@ -6328,7 +6452,6 @@ var render = function() {
                           _c(
                             "v-date-picker",
                             {
-                              attrs: { scrollable: "" },
                               model: {
                                 value: _vm.date,
                                 callback: function($$v) {
@@ -6424,7 +6547,13 @@ var render = function() {
                         outlined: "",
                         color: "primary"
                       },
-                      on: { click: _vm.addAppointment }
+                      on: {
+                        click: function($event) {
+                          _vm.appointment
+                            ? _vm.updateAppointment()
+                            : _vm.addAppointment()
+                        }
+                      }
                     },
                     [_c("v-icon", [_vm._v("mdi-login-variant")])],
                     1
@@ -64448,7 +64577,7 @@ __webpack_require__.r(__webpack_exports__);
 axios__WEBPACK_IMPORTED_MODULE_0___default.a.defaults.headers.common = {
   'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
   'X-Requested-With': 'XMLHttpRequest',
-  'Content-Type': 'Capplication/x-www-form-urlencoded'
+  'Content-Type': 'application/x-www-form-urlencoded'
 };
 axios__WEBPACK_IMPORTED_MODULE_0___default.a.defaults.baseURL = "http://localhost:8000/api/";
 /* harmony default export */ __webpack_exports__["default"] = (axios__WEBPACK_IMPORTED_MODULE_0___default.a);

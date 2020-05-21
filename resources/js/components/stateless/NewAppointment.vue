@@ -2,7 +2,7 @@
   <div id="app">
     <v-card class="elevation-12">
       <v-toolbar color="primary" dark flat align-center>
-        <v-btn @click="closeAppointment" icon>
+        <v-btn @click="closeAppointmentForm" icon>
                 <v-icon x-large>mdi-arrow-left-bold-hexagon-outline</v-icon>
           </v-btn>
         <v-spacer />
@@ -15,9 +15,11 @@
             <v-text-field
               label="User Id"
               type="text"
+              :disabled="appointment != null"
               v-model="idUser"
+              v-on:change="updatePets()"
               prepend-icon="mdi-account-circle"
-              :rules="[v => !!v || 'Id is required']"
+              :rules="[v => (v!=='') || 'Id is required']"
               required
             ></v-text-field>
           </v-col>
@@ -30,6 +32,7 @@
               label="Select pet"
               prepend-icon="mdi-paw"
               required
+              return-object
             ></v-select>
           </v-col>
           <v-col cols="12" md="12">
@@ -41,17 +44,19 @@
               :rules="[v => !!v || 'Assign the appointment to an employee is required']"
               label="Assign to Employee"
               required
+              return-object
             ></v-select>
           </v-col>
           <v-col cols="12" md="12">
               <v-select
               v-model="service"
               :items="services"
+              item-text="name"
               prepend-icon="mdi-format-list-checkbox"
               :rules="[v => !!v || 'Service is required']"
               label="Select a service"
-              item-text="name"
               required
+              return-object
             ></v-select>
           </v-col>
           <v-col cols="12" md="12">
@@ -71,7 +76,7 @@
                   v-on="on"
                 ></v-text-field>
               </template>
-              <v-date-picker v-model="date" scrollable>
+              <v-date-picker v-model="date">
                 <v-spacer></v-spacer>
                 <v-btn text color="primary" @click="modal = false">Cancel</v-btn>
                 <v-btn text color="primary" @click="$refs.dialog.save(date)">OK</v-btn>
@@ -91,7 +96,7 @@
           </v-col>
         </v-form>
         <v-spacer>
-          <v-btn type="submit" :disabled="!valid" outlined color="primary" @click="addAppointment">
+          <v-btn type="submit" :disabled="!valid" outlined color="primary" @click="appointment?updateAppointment():addAppointment()">
             <v-icon>mdi-login-variant</v-icon>
           </v-btn>
         </v-spacer>
@@ -103,13 +108,14 @@
 <script>
 //import axios from 'axios'
 import axios from '../../plugins/axios'
-
 import qs from 'qs'
+
 export default {
   name: "newappointmentform",
   props: ["appointment"],
   data() {
     return {
+      newAppointmentStatus: null,
       date: new Date().toISOString().substr(0, 10),
       modal: false,
       valid: true,
@@ -143,7 +149,8 @@ export default {
     };
   },
   methods: {
-    closeAppointment(){
+    closeAppointmentForm()
+    {
       this.$emit("closeAppointmentForm")
     },
     resetFields()
@@ -159,73 +166,98 @@ export default {
     },
     addAppointment() 
     {
-      //Save Appointment this.$emit("notifyNewForum")
-      /*axios.post("api/appointments", {
-        date: this.date + " " + this.hour,
-        pet: this.pet.id,
-        assigned_to: this.assigned_to.id,
-        service: this.service.id,
-      })
-      .then((result) => {
-        console.log(result)
-        this.$emit("notifyNewAppointment")
-      }).catch((err) => {
-        console.log(err)
-      });
-      */
-     /*
-      const params = new URLSearchParams()
-      params.append('date', this.date + " " + this.hour)
-      params.append('pet', this.pet.id)
-      params.append('assigned_to', this.assigned_to.id)
-      params.append('service', this.service.id)
-    
-      const requestBody = {
-        date: this.date + " " + this.hour,
-        pet: this.pet.id,
-        assigned_to: this.assigned_to.id,
-        service: this.service.id,
-      } 
-      
-      const config = 
+      console.log(this.service.id)
+      axios.post('appointments',
+      {         
+          date: this.date + " " + this.hour,         
+          pet: this.pet.id,         
+          assigned_to: this.assigned_to.id,         
+          service: this.service.id
+      }).then((response) => 
       {
-        headers: 
-        {     
-          'Content-Type': 'application/x-www-form-urlencoded',
-        } 
-      }  
-      axios.post('api/appointments', qs.stringify(requestBody), config) 
-      .then((result) => console.log(result)).catch((err) => console.log(err))
-      */        
-      axios({
-        method: 'post',
-        url: 'appointments',
-        data: qs.stringify(
+        this.newAppointmentStatus = {
+          type: 'success',
+          message: response.data.message,
+          icon: 'mdi-checkbox-marked-circle-outline'
+        }
+        this.$emit("notifyNewAppointmentStatus", this.newAppointmentStatus)
+        this.closeAppointmentForm()
+        this.$emit('notifyNewAppointment')
+      }).catch((error) => 
+      {
+        this.newAppointmentStatus = {
+          type: 'error',
+          message: error.message,
+          icon: 'mdi-skull-outline'
+        }
+        this.$emit("notifyNewAppointmentStatus", this.newAppointmentStatus)
+        this.closeAppointmentForm()
+      })
+    },
+    updateAppointment() 
+    {
+      console.log(this.appointment)
+      axios.put('appointments/' + this.appointment.id,
         {         
           date: this.date + " " + this.hour,         
           pet: this.pet.id,         
           assigned_to: this.assigned_to.id,         
-          service: this.service.id      
-        }),
-      }).then((response) => console.log(response)).catch((error) =>console.log(error))
-      /*
-      this.newForumStatus  = 
-                  {
-                    type: 'success',
-                    message: 'The forum was created successfully',
-                    icon: 'mdi-checkbox-marked-circle-outline'
-                  }
-      */
-      //  this.$emit("notifyNewAppointmentStatus", this.newAppointmentStatus)
+          service: this.service.id, 
+          id: this.appointment.id     
+        }
+      )
+      .then((response) => 
+      {
+        this.newAppointmentStatus = 
+        {
+          type: 'success',
+          message: response.data.message,
+          icon: 'mdi-checkbox-marked-circle-outline'
+        }
+        this.$emit("notifyNewAppointmentStatus", this.newAppointmentStatus)
+        this.closeAppointmentForm()
+        this.$emit('notifyNewAppointment')
+      })
+      .catch((error) => 
+      {
+        this.newAppointmentStatus = 
+        {
+          type: 'error',
+          message: error.message,
+          icon: 'mdi-skull-outline'
+        }
+        this.$emit("notifyNewAppointmentStatus", this.newAppointmentStatus)
+        this.closeAppointmentForm()
+      })
+    },
+    async updatePets()
+    {
+      let query = await axios.get("pets")
+      let userPets = []
+      query.data.data.forEach(pet => 
+      {
+        if(pet.owner == this.idUser)
+        {
+          userPets.push(pet)
+        }
+      })
+      this.pets = userPets
+    },
+    async updateOptions()
+    {
+      let query = await axios.get("services")
+      .catch((error) => console.log(error))
+      this.services = query.data.data
+
+      query = await axios.get("employees")
+      .catch((error) => console.log(error))
+      this.employees = query.data.data
     }
   },
   created()
   {
     if(this.appointment)
     {
-      this.pets.push(this.appointment.pet)
-      this.pet = this.appointment.pet
-
       this.services.push(this.appointment.service)
       this.service = this.appointment.service
 
@@ -236,15 +268,24 @@ export default {
 
       let dateTimeData = this.appointment.date.split(' ')
 
-      let dateData = dateTimeData[0].split('-')
-      let date = new Date(dateData[0], dateData[1], dateData[2])
+      this.date = dateTimeData[0]
 
       
       let timeData = dateTimeData[1].split(':', 2)
       let timeString = timeData[0] + ":" + timeData[1]
-      this.hours.push(timeString)
       this.hour = timeString
+
+      this.updatePets()
+      this.pets.forEach(pet => 
+      {
+        if(pet.id == this.appointment.pet.id)
+        {
+          this.pet = pet
+        }
+      })
+      
     }
+    this.updateOptions()
   }
 };
 </script>

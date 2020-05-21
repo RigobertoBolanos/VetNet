@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('phonenumber');
             $table->string('professionalcard')->nullable();
             $table->string('academicdegrees')->nullable();
+            $table->integer('contractnumber')->nullable();
             $table->timestamps();
             $table->softDeletes();
             $table->timestamp('email_verified_at')->nullable();
