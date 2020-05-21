@@ -1927,11 +1927,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    services: _stateless_Services__WEBPACK_IMPORTED_MODULE_0__["default"]
+    Services: _stateless_Services__WEBPACK_IMPORTED_MODULE_0__["default"]
   }
 });
 
@@ -3812,7 +3811,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    cardService: _statefull_Service__WEBPACK_IMPORTED_MODULE_0__["default"]
+    Service: _statefull_Service__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   data: function data() {
     return {
@@ -3822,8 +3821,10 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
 
-    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('api/services').then(function (response) {
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('services').then(function (response) {
       return _this.services = response.data.data;
+    })["catch"](function (error) {
+      return console.log(error);
     });
   }
 });
@@ -7099,7 +7100,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_c("h1", [_vm._v("Home")]), _vm._v(" "), _c("services")], 1)
+  return _c("div", [_c("Services")], 1)
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -9891,7 +9892,7 @@ var render = function() {
               return _c(
                 "v-col",
                 { key: service.id, attrs: { xs: "12", sm: "4", md: "3" } },
-                [_c("card-service", { attrs: { service: service } })],
+                [_c("Service", { attrs: { service: service } })],
                 1
               )
             }),
@@ -68041,6 +68042,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
     component: _components_stateless_RegisterForm__WEBPACK_IMPORTED_MODULE_7__["default"]
   }, {
     path: '/users',
+    redirect: '/',
     component: _components_stateless_Users__WEBPACK_IMPORTED_MODULE_2__["default"]
   }, {
     path: '/pets',

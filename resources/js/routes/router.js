@@ -14,7 +14,7 @@ export default new Router({
   routes: [
     {path: '/',                             component: Home},
     {path: '/register',                     component: RegisterForm},
-    {path: '/users',                        component: Users},
+    {path: '/users', redirect: '/',                        component: Users},
     {path: '/pets',                         component: Pets},
     {path: '/appointments',                 component: Appointments},
     {path: '/login',                        component: LogInForm},

@@ -6,7 +6,7 @@
     <v-container grid-list-md fluid>
       <v-row>
           <v-col xs="12" sm="4" md="3" v-for="service in services" :key="service.id">
-            <card-service :service="service"></card-service>
+            <Service :service="service"></Service>
           </v-col>
       </v-row>
     </v-container>
@@ -19,7 +19,7 @@ import axios from 'axios'
 
 export default {
   components: {
-    cardService : Service
+    Service
   },
   data(){
     return{
@@ -27,7 +27,7 @@ export default {
     }
   },
   created(){
-    axios.get('api/services').then((response) => this.services = response.data.data)
+    axios.get('services').then((response) => this.services = response.data.data).catch((error) => console.log(error))
   }
 }
 </script>
