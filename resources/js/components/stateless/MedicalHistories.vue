@@ -158,7 +158,7 @@
                   <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="white" text @click="addRecord = false">Close</v-btn>
-                    <v-btn type="submit" color="white" text @click="replyToForum" >Save</v-btn>
+                    <v-btn type="submit" color="white" text @click="newRecord" >Save</v-btn>
                   </v-card-actions>
                 </v-card>
               </v-dialog>
@@ -238,7 +238,7 @@ export default {
       this.status = status
       setTimeout(() => {this.status = null;this.deletedialog = null}, 2000);
     },
-    addRecord() 
+    newRecord() 
     {
       let editStatus = null
       this.db.collection("entries").doc(this.forum.id).set(
