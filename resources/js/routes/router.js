@@ -6,7 +6,7 @@ import Appointments from '../components/stateless/Appointments';
 import Home from '../components/Home'
 import MedicalHistory from '../components/statefull/MedicalHistory' 
 import RegisterForm from '../components/stateless/RegisterForm'
-
+import LogInForm from '../components/stateless/LogInForm'
 Vue.use(Router);
 
 export default new Router({
@@ -17,6 +17,7 @@ export default new Router({
     {path: '/users',                        component: Users},
     {path: '/pets',                         component: Pets},
     {path: '/appointments',                 component: Appointments},
-    {path: '/pets/medicalHistory/:petId',  component: MedicalHistory},
+    {path: '/login',                        component: LogInForm},
+    {path: '/pets/medicalHistory/:petId',   component: MedicalHistory},
   ]
 });

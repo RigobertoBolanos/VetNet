@@ -13,7 +13,7 @@
         <v-spacer></v-spacer>
 
         <v-dialog v-model="add" :persistent="true">
-          <NewPet v-if="add" :pet="petToUpdate" @notifyNewPet="petAdded" @notifyNewPetStatus="showNewPetStatus" @closePetForm="closePetForm"></NewPet>
+          <NewPet v-if="add" :petToUpdate="petToUpdate" @notifyNewPet="petAdded" @notifyNewPetStatus="showNewPetStatus" @closePetForm="closePetForm"></NewPet>
         </v-dialog>
 
         <v-btn v-if="true" small fab color="blue" @click="add = !add">
@@ -75,14 +75,15 @@ export default {
   name: "pets",
     data(){
         return{
-            pets: [],
-            search: '', 
-            add: false,
-            newPetStatus: null  ,
-            petToUpdate: null  
+          pets: [],
+          search: '', 
+          add: false,
+          newPetStatus: null,
+          petToUpdate: null  
         }
     },
-    computed: {
+    computed: 
+    {
       headers () {
         return [
           {
@@ -130,9 +131,32 @@ export default {
           value.toString().indexOf(search) !== -1
         );
       },
-      updatePet(item)
+      deletePet(pet) 
       {
-        this.petToUpdate = item
+        axios.delete('pets/' + pet.id
+        ).then((response) => 
+        {
+          this.newPetStatus = {
+          type: 'success',
+          message: response.data.message,
+          icon: 'mdi-checkbox-marked-circle-outline'
+          }
+          this.showNewPetStatus(this.newPetStatus)
+          this.refresh()
+        })      
+        .catch((error) => 
+        {
+          this.newPetStatus = {
+            type: 'error',
+            message: error.message,
+            icon: 'mdi-skull-outline'
+          }
+          this.showNewPetStatus(this.newPetStatus)
+        })
+      },
+      updatePet(pet)
+      {
+        this.petToUpdate = pet
         this.add = true
       },
       petAdded() 
@@ -152,12 +176,13 @@ export default {
       },
       async refresh()
       {
+        this.pets = []
         let query = await axios.get("pets")
 
         query.data.data.forEach( async data =>
         {
           let owner =  await axios.get("users/" + data.owner)
-         
+          console.log(data)
           this.pets.push({
             name: data.name,
             breed: data.breed,

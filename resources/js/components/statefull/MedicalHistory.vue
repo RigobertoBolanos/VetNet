@@ -215,11 +215,9 @@ export default {
       this.medicalHistoryId = petData.data.data.medicalhistory
       let recordsData = await axios.get("medicalHistory/medicalRecords/"+this.medicalHistoryId)
       let tempRecords = []
-      console.log(recordsData)
       recordsData.data.data.forEach(record => {
           tempRecords.push(record);
       });
-      console.log(tempRecords)
       if(tempRecords.length>0){
         this.records = tempRecords.sort(function(a, b) {
             return a.date - b.date
@@ -256,7 +254,6 @@ export default {
     }
   },
   created() {
-    console.log('f')
     this.refresh();
   },
   filters: {

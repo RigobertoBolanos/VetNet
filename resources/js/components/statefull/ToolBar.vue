@@ -4,6 +4,7 @@
       <v-icon style="margin-right:5%">mdi-forum</v-icon>
       <v-btn to="/users" text>Users</v-btn>
       <v-btn to="/appointments" text>Appointments</v-btn>
+      <v-btn to="/pets" text>Pets</v-btn>
     </v-toolbar-items>
 
     <v-spacer></v-spacer>

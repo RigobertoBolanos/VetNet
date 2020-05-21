@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use \Askedio\SoftCascade\Traits\SoftCascadeTrait;
 
 /**
  * Class MedicalHistory
@@ -23,7 +24,7 @@ class MedicalHistory extends Model
 
     protected $dates = ['deleted_at'];
 
-
+    protected $softCascade = ['medicalRecords'];
 
     public $fillable = [
         'pet'
