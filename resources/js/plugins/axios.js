@@ -5,6 +5,6 @@ axios.defaults.headers.common = {
     'Content-Type': 'application/x-www-form-urlencoded'
 };
 
-axios.defaults.baseURL = "http://localhost:8000/api/"
+axios.defaults.baseURL = "https://localhost:8000/api/"
 
 export default axios;

@@ -68000,7 +68000,7 @@ axios__WEBPACK_IMPORTED_MODULE_0___default.a.defaults.headers.common = {
   'X-Requested-With': 'XMLHttpRequest',
   'Content-Type': 'application/x-www-form-urlencoded'
 };
-axios__WEBPACK_IMPORTED_MODULE_0___default.a.defaults.baseURL = "http://localhost:8000/api/";
+axios__WEBPACK_IMPORTED_MODULE_0___default.a.defaults.baseURL = "https://localhost:8000/api/";
 /* harmony default export */ __webpack_exports__["default"] = (axios__WEBPACK_IMPORTED_MODULE_0___default.a);
 
 /***/ }),
